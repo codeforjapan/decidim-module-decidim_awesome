@@ -3,10 +3,9 @@ fr:
     attributes:
       config:
         additional_proposal_sortings: Activer les options de tri supplémentaires
-        allow_images_in_full_editor: Autoriser les images dans l'éditeur HTML complet
-        allow_images_in_markdown_editor: Autoriser les images dans l'éditeur de markdown
+        allow_images_in_editors: Autoriser les images dans l'éditeur HTML
         allow_images_in_proposals: Autoriser les images dans l'éditeur de propositions
-        allow_images_in_small_editor: Autoriser les images dans l'éditeur HTML simple
+        allow_videos_in_editors: Autoriser les vidéos dans l'éditeur HTML
         auto_save_forms: Sauvegarde automatique des formulaires dans le stockage local du navigateur
         intergram_auto_no_response: Un message qui est envoyé une minute après que l'utilisateur envoie son premier message et qu'aucune réponse n'a été reçue
         intergram_auto_response: Un message qui est envoyé immédiatement après que l'utilisateur envoie son premier message
@@ -19,9 +18,11 @@ fr:
         intergram_title_open: Titre de la conversation ouverte
         intergram_use_floating_button: Si coché, la conversation fermée est toujours un bouton au lieu d'un texte
         proposal_custom_fields: Champs personnalisés %{id}
+        proposal_private_custom_fields: Champs privés personnalisés %{id}
+        scoped_admin_styles: Style personnalisés %{id}
         scoped_admins: Groupe d'administrateurs restreints %{id}
         scoped_styles: Style personnalisés %{id}
-        use_markdown_editor: Utiliser un éditeur Markdown au lieu de l'éditeur HTML
+        user_timezone: Autoriser les utilisateurs à définir leur fuseau horaire dans leur profil
         validate_body_max_caps_percent: Pourcentage maximum autorisé de lettres majuscules pour la description
         validate_body_max_marks_together: Nombre maximum de caractères spéciaux autorisés dans le corps
         validate_body_min_length: Nombre de caractères minimum pour le corps
@@ -47,10 +48,12 @@ fr:
         target: Ouvrir dans
         url: URL
         visibility: Visibilité
-      proposal:
-        proposal_custom_fields: Champs personnalisés
+      user:
+        user_time_zone: Fuseau horaire personnel
   decidim:
     admin:
+      actions:
+        manage: Gérer
       filters:
         admin_accountability:
           admin_role_type:
@@ -77,7 +80,6 @@ fr:
             announcement: Annonce
             iframe: Code iframe
             iframe_help: 'Mettez votre code en html: <iframe width="100%" height="700" frameBorder="0" allowFullscreen src="..."></iframe>. Le contenu sera nettoyé à partir d''autres balises HTML. Assurez-vous d''utiliser 100% comme largeur pour remplir l''écran.'
-            no_margins: Aucune marge entre l'iframe et le reste de la page
             viewport_width: Limiter la largeur maximale à la fenêtre de l'application
           step:
             announcement: Annonce
@@ -119,6 +121,7 @@ fr:
               supported_first: Déjà supporté en priorité
               supported_last: A supporter en priorité
               za: Z-A (alphabétique inverse)
+            limit_pending_amendments: Ne permettre qu'un seul amendement en attente pour chaque proposition.
             sort_orders_enabled: Types de tri activés
             voting_cards_box_title: Titre pour le boîtier de vote
             voting_cards_box_title_help: La valeur par défaut est "Vote sur cette proposition". Utilisez "-" pour la masquer.
@@ -133,7 +136,11 @@ fr:
               supported_last: A supporter en priorité
               za: Z-A (alphabétique inverse)
     decidim_awesome:
+      account:
+        timezone_select:
+          time_zone_helper: Utilisez votre fuseau horaire personnel pour afficher les dates dans votre heure locale lorsque vous êtes connecté.
       admin:
+        actions: Actions
         admin_accountability:
           admin_roles:
             admin: Super administrateur
@@ -188,7 +195,6 @@ fr:
               Il semble que cette installation a besoin de migrer <strong>%{total}</strong> des anciennes images vers le nouveau système.<br>
               Vous pouvez démarrer le processus maintenant et il sera effectué en arrière-plan.
             start_image_migrations: "\U0001F449 Démarrez le processus de migration maintenant"
-            title: Compatibilité système
         config:
           caution: 'REMARQUE : Cette fonctionnalité modifie fortement certains comportements par défaut qui peuvent conduire à des résultats inattendus. Utilisez-la avec précaution !'
           constraints:
@@ -226,10 +232,9 @@ fr:
               incorrect_css: 'CSS dans la boîte #%{key} est invalide'
               incorrect_json: 'La définition JSON dans la boite #%{key} n''est pas valide'
             help:
-              allow_images_in_full_editor: Ceci ajoutera une icône d'ajout d'images dans tous les éditeurs WYSIWYG avec toutes les options activées (icônes).
-              allow_images_in_markdown_editor: Cela permettra à l'éditeur markdown de télécharger des images par copier, coller ou glisser-déposer.
+              allow_images_in_editors: Ceci ajoutera une icône de téléchargement d'images dans tous les éditeurs WYSIWYG
               allow_images_in_proposals: Cela permettra de télécharger des images dans l'éditeur de propositions, disponible pour n'importe quel utilisateur
-              allow_images_in_small_editor: Ceci ajoutera une icône d'ajout d'images dans tous les éditeurs WYSIWYG avec seulement les options minimales activées (icônes).
+              allow_videos_in_editors: Ceci ajoutera une icône de lien vidéo dans tous les éditeurs WYSIWYG
               auto_save_forms: Ceci utilisera LocalStorage ( cache navigateur) pour enregistrer automatiquement les données introduites par les utilisateurs dans les enquêtes et autres formulaires pendant qu'ils le remplissent. Les données seront restaurées lors d'une prochaine visite avec le même navigateur au cas où le formulaire ne serait pas soumis. Si le formulaire est soumis, les données seront supprimées. Si les utilisateurs suppriment leurs données LocalStorage ne seront pas non plus restaurées.
               drag_and_drop_supported: Lorsque vous ajoutez des images, le glisser-déposer est pris en charge. Les images seront envoyées sur le serveur et insérées en tant que ressources externes (il n'utilise pas l'encodage en base64).
               intergram_about: Intergram utilise la messagerie Telegram pour gérer un widget de chat en direct intégré dans le bas de la page.
@@ -238,10 +243,18 @@ fr:
               proposal_custom_fields: Créer des champs personnalisés pour la création de proposition qui s'appliquent uniquement à certaines parties du web public (utilisez les restrictions pour cela)
               proposal_custom_fields_example: Les données sont stockées dans un objet XML en utilisant des attributs HTML compatibles (dl,dt,dd éléments) en remplaçant le "body" dans une proposition standard.
               proposal_custom_fields_translations: "Les libellés, le texte d’aide, les espaces réservés et les valeurs par défaut peuvent utiliser les traductions personnalisées de votre application. \nPour cela, au lieu d'utiliser une chaîne de caractères littérale, utilisez la clé i18n (elle doit contenir au moins un point).\nPar exemple :\n- \"activemodel.attributes.proposal.title au lieu de \"Titre\"\n- \"activemodel.attributes.proposition.address\" au lieu de \"Adresse\"\nOu utilisez vos propres clés en combinaison avec d'autres outils pour définir des traductions (par exemple: utiliser le module de personnalisation des termes) :\n- \"myapp.custom_fields.bio\" à la place de \"Biography\""
+              proposal_private_custom_fields: Similaire aux champs publics, mais cette information ne sera pas visible publiquement (seuls les administrateurs y auront accès).
+              proposal_private_custom_fields_translations: |
+                Les champs privés personnalisés sont affichés dans une section distincte avec ce texte d'information :
+                %{warning}
+                Ce texte peut être personnalisé avec une traduction personnalisée en utilisant la clé:
+                %{key}
+              scoped_admin_styles: Soyez conscient que cacher des éléments pourrait rendre l'interface administrateur inutilisable. Agissez avec prudence.
+              scoped_admin_styles_variables: 'Vous pouvez utiliser les variables CSS suivantes pour les couleurs personnalisées de l''organisation :'
               scoped_admins: Promouvoir les utilisateurs réguliers en administrateurs qui ne peuvent administrer que certaines parties de la plateforme (utilisez l'éditeur de restrictions pour cela). Notez que les utilisateurs qui ont déjà les permissions d'administration habituelles seront ignorés.
               scoped_styles: Créer un CSS personnalisé qui s'applique uniquement à certaines parties du site web public (front-end) (utilisez l'éditeur de restrictions pour cela)
               scoped_styles_variables: 'Vous pouvez utiliser les variables CSS suivantes pour les couleurs personnalisées de l''organisation :'
-              use_markdown_editor: Cela remplacera l'éditeur Quill WYSIWYG par un éditeur Markdown. Le texte sera affiché en HTML dans les pages publiques (le texte dans la base de données sera sauvegardé en tant que texte markdown)
+              user_timezone: Ceci va ajouter un champ de sélection dans le profil de l'utilisateur pour définir son fuseau horaire. Ceci sera utilisé pour afficher les dates et les heures dans l'heure locale de l'utilisateur.
               validate_body_max_caps_percent: Zéro n'autorisera aucune lettre majuscule, 100 forcera à tout écrire en majuscule
               validate_body_max_marks_together: 'Limiter le nombre de points d''interrogation et d''exclamation qui peuvent être écrits ensemble. Par exemple : si c''est 2, alors ''!!!'' ne sera pas autorisé dans le texte'
               validate_body_min_length: Ce nombre peut être zéro, ce qui rendra ce champ non obligatoire
@@ -252,24 +265,47 @@ fr:
               body: Validations d'entrée de l'utilisateur pour le champ "body"
               title: Validations d'entrée de l'utilisateur pour le champ "body"
           form_proposal_custom_fields:
+            delete: Supprimer
             new: Ajouter une nouvelle boîte de champs personnalisés
             remove: Supprimer cette boîte de champs personnalisés
             sure_to_remove: Êtes-vous sûr de vouloir détruire ce champ ?
+          form_proposal_private_custom_fields:
+            delete: Supprimer
+            new: Ajouter une nouvelle section de champs personnalisés
+            remove: Supprimer cette boîte de champs personnalisés
+            sure_to_remove: Êtes-vous sûr de vouloir supprimer ce champ ?
+          form_scoped_admin_styles:
+            delete: Supprimer
+            new: Ajouter un nouveau bloc CSS "tableau de bord admin"
+            remove: Supprimer ce bloc CSS
+            sure_to_remove: Êtes-vous sûr de vouloir supprimer ce bloc CSS ?
           form_scoped_admins:
+            delete: Supprimer
             new: Ajouter un nouveau groupe "Administrateurs de secteur"
             remove: Supprimer ce groupe "Administrateurs de secteur"
             sure_to_remove: Êtes-vous sûr de vouloir détruire ce groupe « Administrateurs de secteur »?
           form_scoped_styles:
-            new: Ajouter une nouvelle boîte CSS
+            delete: Supprimer
+            new: Ajouter un nouveau bloc CSS "interface publique"
             remove: Supprimer cette boîte CSS
             sure_to_remove: Etes-vous sûr de vouloir supprimer cette boîte CSS ?
           none: "⛔ Jamais! - Désactive toute autre contrainte"
           process_groups: Groupes de processus
-          rich_text_editor_in_public_views: 'NOTE : "Éditeur de texte enrichi pour les participants" est activé, cette option ne s''appliquera pas. Utilisez les hacks de l''éditeur de texte à la place pour activer les images dans les propositions.'
           show:
             title: Tweaks pour %{setting}
             update: Mettre à jour la configuration
           system: Partout sauf les espaces participatifs
+          title:
+            admins: Administrateurs de secteur
+            editors: Hacks de l'éditeur
+            livechat: Chat en direct
+            proposal_custom_fields: 'Champs personnalisés de propositions : champs publics'
+            proposal_private_custom_fields: 'Champs personnalisés de propositions : champs privés'
+            proposals: Hacks pour les propositions
+            scoped_admin_styles: 'Styles personnalisés : Tableau de bord admin'
+            scoped_styles: 'Styles personnalisés : Interface publique'
+            styles: Styles personnalisés
+            surveys: Enquêtes et formulaires
           update:
             error: Erreur lors de la mise à jour de la configuration ! %{error}
             success: La configuration a bien été mise à jour
@@ -329,17 +365,52 @@ fr:
           update:
             error: Erreur lors de la mise à jour de la redirection! %{error}
             success: Redirection mise à jour avec succès
+        maintenance:
+          private_data:
+            component: Espace / Fonctionnalité
+            confirm_delete: Êtes-vous sûr de vouloir supprimer toutes les données privées pour cette ressource ? Cette action est irréversible.
+            delete: Tout supprimer
+            destroying_private_data: Les données privées pour %{title} sont sur le point d'être effacées. Veuillez vérifier à nouveau dans quelques minutes.
+            done: Terminé
+            help_html: |
+              Cet outil vous permet de supprimer toutes les données privées d'un espace ou d'une fonctionnalité participatif spécifique. Cette action est irréversible et supprimera toutes les données privées de la base de données.
+              <br><br>
+              <strong>Qu'est-ce qui est considéré comme des données privées ?</strong>
+              <br>
+              Les données privées sont toutes les informations qui ne sont pas accessibles au public et qui sont uniquement accessibles aux administrateurs. Cela inclut, pour le moment, les informations des champs personnalisés privés.
+              <br><br>
+              <strong>Que se passe-t-il lorsque je supprime des données privées ?</strong>
+              <br>
+              Lorsque vous supprimez des données privées, toutes les informations privées de l'espace ou du composant participatif sélectionné seront définitivement supprimées de la base de données. Un journal de cette action sera stocké dans le système à des fins d'audit.
+              <br><br>
+              <strong>Qu'advient-il des données publiques ?</strong>
+              <br>
+              Les données publiques ne seront pas affectées par cette action. Seules les données privées seront supprimées.
+              <br><br>
+              <strong>Y a-t-il un délai minimum à attendre avant de supprimer des données privées ?</strong>
+              <br>
+              Oui, vous ne pouvez pas supprimer des données privées si la dernière mise à jour date de moins de %{time_ago}. Vous pouvez modifier cette configuration dans le fichier d'initialisation.
+            items_count: Total affecté
+            last_date: Dernière mise à jour
+            no_data: Aucune donnée privée plus ancienne que %{time_ago}
+            not_destroyable: Cette ressource ne peut pas encore être supprimée
+            removing: Suppression en cours...
+            time_ago: "Il y a %{time}"
         menu:
           admins: Administrateurs de secteur
-          checks: Compatibilité système
           custom_redirects: Redirections personnalisées
           editors: Hacks de l'éditeur
           livechat: Chat en direct
+          maintenance:
+            checks: Compatibilité système
+            maintenance: Maintenance
+            private_data: Données privées
           menu_hacks: Tweaks de menu
           proposal_custom_fields: Champs de propositions personnalisés
           proposals: Hacks pour les propositions
           styles: Styles personnalisés
           surveys: Enquêtes et formulaires
+          verifications: Vérifications
         menu_hacks:
           create:
             error: Erreur lors de la création de l'élément de menu ! %{error}
@@ -364,10 +435,13 @@ fr:
           index:
             confirm_destroy: Êtes-vous sûr de vouloir supprimer cette personnalisation ?
             edit: Modifier
+            home_content_block_menu:
+              title: Bloc de menu global
+            menu:
+              title: Menu principal
             new: Nouvel élément de menu
             remove: Supprimer l'ajout
             remove_hack: Supprimer la personnalisation
-            title: Menu principal
           new:
             save: Enregistrer
             title: Nouvel élément de menu
@@ -375,6 +449,37 @@ fr:
             error: Erreur lors de la mise à jour de l'élément de menu ! %{error}
             success: Élément de menu mis à jour avec succès
           url_exists: La même URL est déjà configurée, veuillez la modifier au lieu de la créer à nouveau.
+        officializations:
+          authorizations: Autorisations
+          verification_modal:
+            authorizations_for: Autorisations pour %{user}
+            close: Fermer
+        proposal_custom_fields:
+          menu:
+            title: Champs publiques
+          private_body: Corps de proposition privé
+          private_data_last_remove: Ces données ont été détruites il y a %{time_ago}.
+          private_data_last_update: Ces données ont été mises à jour il y a %{time_ago}.
+          proposal_private_custom_fields: Champs privés
+          remove_private_data: "👉 Vous pouvez le supprimer"
+        scoped_admin_styles:
+          menu:
+            title: Tableau de bord admin
+        scoped_styles:
+          menu:
+            title: Interface publique
+      admin_log:
+        component:
+          destroy_private_data: "%{user_name} a détruit les objets %{count} de données privées pour %{resource_name} dans %{space_name}"
+      amendments:
+        modal:
+          amendment_exists: Un amendement existe déjà
+          current_amendment_html: <p>Vous pouvez <a href="%{amendment_link}">accéder à l'amendement actuel ici</a>.</p>
+          dismiss: D'accord
+          explanation_html: |
+            <p>Actuellement, il y a un autre amendement est en cours d'analyse pour cette proposition. Pour en créer un nouveau, vous devez attendre que l'amendement actuel soit accepté ou rejeté.</p>
+            <p>Vous pouvez également contacter l'auteur de la présente proposition à l'adresse suivante <a href="%{proposal_link}">en laissant un commentaire</a> et tenter d'accélérer la résolution de l'amendement actuel.</p>
+        pending_limit_reached: Désolé, il ne peut y avoir qu'un seul amendement en attente à la fois. Veuillez patienter jusqu'à ce que "%{emendation}"" soit accepté ou rejeté.
       config:
         intergram:
           auto_no_response: Il semble que personne ne soit disponible pour répondre à l'heure actuelle. Dites-nous comment nous pouvons vous contacter, et nous vous contacterons dès que possible.
@@ -429,6 +534,14 @@ fr:
           show:
             view_meeting: Voir la rencontre
             view_proposal: Voir la proposition
+      proposal_private_custom_fields_disclosure: Cette information ne sera pas publiée
+      required_authorizations:
+        index:
+          cancel: Je vais le faire ultérieurement, %{link}.
+          granted_title: Vérifications accordées
+          missing_title: Pas encore vérifié
+          resume_title: Vérifications en attente
+          title: Vérifiez votre identité
       validators:
         too_much_caps: Utilise trop de majuscule (plus de %{percent} du texte)
       voting:
@@ -436,7 +549,7 @@ fr:
           abstained: "✔ Abstenu.e"
           change_vote: Modifier mon vote
           default_box_title: Votez sur la proposition
-          default_instructions_html: <p>Veuillez lire attentivement les règles électorales pour comprendre comment votre vote sera utilisé par %{organization}"</p>
+          default_instructions_html: "<p>Veuillez lire attentivement les règles électorales pour comprendre comment votre vote sera utilisé par %{organization}\"</p>"
           modal:
             cancel: Annuler
             message: Votre vote sera considéré comme définitif le %{date}. Vous pouvez le modifier jusque-là
@@ -454,19 +567,30 @@ fr:
             weight_2_short: 'J:'
             weight_3: Verte
             weight_3_short: 'V:'
+    meetings:
+      meetings_map:
+        view_meeting: Voir la rencontre
     proposals:
+      admin:
+        exports:
+          awesome_private_proposals: Les propositions avec des données privées
       proposals:
         orders:
           az: A-Z (alphabétique)
           supported_first: Déjà supporté en priorité
           supported_last: A supporter en priorité
           za: Z-A (alphabétique inverse)
+        proposal:
+          view_proposal: Voir la proposition
   layouts:
     decidim:
-      admin:
-        decidim_awesome:
-          title: Tweaks Decidim
       decidim_awesome:
+        admin:
+          maintenance:
+            title: 'Outils de maintenance: %{title}'
+            titles:
+              checks: Vérifications de compatibilité système
+              private_data: Nettoyage des données privées
         awesome_config:
           amendments: Amendements
           autosaved_error: LocalStorage n'est pas pris en charge dans votre navigateur, le formulaire ne peut pas être enregistré automatiquement.

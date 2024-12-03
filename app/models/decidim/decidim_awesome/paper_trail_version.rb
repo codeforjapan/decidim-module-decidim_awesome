@@ -9,10 +9,14 @@ module Decidim
         DecidimAwesome.participatory_space_roles.filter(&:safe_constantize)
       end
 
+      def self.safe_admin_role_type(admin_role)
+        Decidim.user_roles.find { |role| role == admin_role }
+      end
+
       scope :space_role_actions, lambda { |organization|
         role_changes = where(item_type: PaperTrailVersion.safe_user_roles, event: "create")
         user_ids_from_object_changes = role_changes.pluck(:object_changes).map { |change| change.match(/decidim_user_id:\n- ?\n- (\d+)/)[1].to_i }
-        relevant_user_ids = Decidim::User.select(:id).where(id: user_ids_from_object_changes, organization: organization).pluck(:id)
+        relevant_user_ids = Decidim::User.select(:id).where(id: user_ids_from_object_changes, organization:).pluck(:id)
         # add users that might have been completly destroyed in any organization
         relevant_user_ids += user_ids_from_object_changes - Decidim::User.select("id").where(id: user_ids_from_object_changes).pluck(:id)
 
@@ -33,15 +37,15 @@ module Decidim
         when "admin"
           base.where("object_changes LIKE '%\nadmin:\n- false\n- true%'")
         else
-          base.where(Arel.sql("object_changes LIKE '%\nroles:\n- []\n- - #{filter}\n%'"))
+          base.where("object_changes LIKE ?", "%\nroles:\n- []\n- - #{filter}\n%")
         end
       end
 
       def present(html: true)
         @present ||= if item_type == "Decidim::UserBaseEntity"
-                       UserEntityPresenter.new(self, html: html)
+                       UserEntityPresenter.new(self, html:)
                      elsif item_type.in?(PaperTrailVersion.safe_user_roles)
-                       ParticipatorySpaceRolePresenter.new(self, html: html)
+                       ParticipatorySpaceRolePresenter.new(self, html:)
                      else
                        self
                      end

@@ -5,12 +5,18 @@ require "spec_helper"
 module Decidim::DecidimAwesome
   module Admin
     describe ConfigForm do
-      subject { described_class.from_params(attributes) }
+      subject { described_class.from_params(attributes).with_context(context) }
 
+      let(:context) do
+        {
+          current_organization: organization
+        }
+      end
+      let(:organization) { create(:organization, available_authorizations: [:dummy_authorization_handler, :another_dummy_authorization_handler]) }
       let(:attributes) do
         {
-          allow_images_in_full_editor: true,
-          allow_images_in_small_editor: true
+          allow_images_in_editors: true,
+          allow_videos_in_editors: true
         }
       end
 
@@ -26,6 +32,17 @@ module Decidim::DecidimAwesome
           foo: valid_fields
         }
       end
+      let(:private_custom_fields) do
+        {
+          foo: valid_fields
+        }
+      end
+      let(:user_timezone) { true }
+      let(:force_authorization_after_login) { ["", "dummy_authorization_handler", "another_dummy_authorization_handler"] }
+      let(:force_authorization_with_any_method) { true }
+      let(:force_authorization_help_text) do
+        { en: "Help text" }
+      end
       let(:valid_fields) { '[{"foo":"bar"}]' }
       let(:invalid_fields) { '[{"foo":"bar"}]{"baz":"zet"}' }
 
@@ -40,6 +57,19 @@ module Decidim::DecidimAwesome
 
       context "when everything is OK" do
         it { is_expected.to be_valid }
+      end
+
+      describe "valid_keys" do
+        let(:attributes) do
+          {
+            force_authorization_after_login:,
+            force_authorization_help_text_en: "Help text"
+          }
+        end
+
+        it "extracts valid keys from params" do
+          expect(subject.valid_keys).to eq([:force_authorization_after_login, :force_authorization_help_text])
+        end
       end
 
       describe "custom styles" do
@@ -58,7 +88,7 @@ module Decidim::DecidimAwesome
             }
           end
 
-          it { is_expected.to be_invalid }
+          it { is_expected.not_to be_valid }
         end
       end
 
@@ -78,7 +108,7 @@ module Decidim::DecidimAwesome
             }
           end
 
-          it { is_expected.to be_invalid }
+          it { is_expected.not_to be_valid }
         end
 
         context "and sending labels with html" do
@@ -91,17 +121,78 @@ module Decidim::DecidimAwesome
         end
       end
 
+      describe "proposal private custom fields" do
+        let(:attributes) do
+          {
+            proposal_custom_fields: custom_fields,
+            proposal_private_custom_fields: private_custom_fields
+          }
+        end
+
+        it { is_expected.to be_valid }
+
+        context "and invalid JSON" do
+          let(:private_custom_fields) do
+            {
+              foo: invalid_fields
+            }
+          end
+
+          it { is_expected.not_to be_valid }
+        end
+      end
+
+      describe "user timezone" do
+        let(:attributes) do
+          {
+            user_timezone:
+          }
+        end
+
+        it { is_expected.to be_valid }
+
+        context "and user timezone is false" do
+          let(:user_timezone) { false }
+
+          it { is_expected.to be_valid }
+        end
+      end
+
+      describe "force authorization after login" do
+        let(:attributes) do
+          {
+            force_authorization_after_login:,
+            force_authorization_with_any_method:,
+            force_authorization_help_text:
+          }
+        end
+
+        it { is_expected.to be_valid }
+
+        context "and force authorization after login is empty" do
+          let(:force_authorization_after_login) { [] }
+
+          it { is_expected.to be_valid }
+        end
+
+        context "and force authorization after login is not a valid handler" do
+          let(:force_authorization_after_login) { %w(invalid_handler another_dummy_authorization_handler) }
+
+          it { is_expected.not_to be_valid }
+        end
+      end
+
       describe "validators" do
         let(:attributes) do
           {
-            validate_title_min_length: validate_title_min_length,
-            validate_title_max_caps_percent: validate_title_max_caps_percent,
-            validate_title_max_marks_together: validate_title_max_marks_together,
-            validate_title_start_with_caps: validate_title_start_with_caps,
-            validate_body_min_length: validate_body_min_length,
-            validate_body_max_caps_percent: validate_body_max_caps_percent,
-            validate_body_max_marks_together: validate_body_max_marks_together,
-            validate_body_start_with_caps: validate_body_start_with_caps
+            validate_title_min_length:,
+            validate_title_max_caps_percent:,
+            validate_title_max_marks_together:,
+            validate_title_start_with_caps:,
+            validate_body_min_length:,
+            validate_body_max_caps_percent:,
+            validate_body_max_marks_together:,
+            validate_body_start_with_caps:
           }
         end
 
@@ -116,25 +207,25 @@ module Decidim::DecidimAwesome
         context "and title min length is empty" do
           let(:validate_title_min_length) { nil }
 
-          it { is_expected.to be_invalid }
+          it { is_expected.not_to be_valid }
         end
 
         context "and title min length is zero" do
           let(:validate_title_min_length) { 0 }
 
-          it { is_expected.to be_invalid }
+          it { is_expected.not_to be_valid }
         end
 
         context "and title min length greater than 100" do
           let(:validate_title_min_length) { 101 }
 
-          it { is_expected.to be_invalid }
+          it { is_expected.not_to be_valid }
         end
 
         context "and body min length is empty" do
           let(:validate_body_min_length) { nil }
 
-          it { is_expected.to be_invalid }
+          it { is_expected.not_to be_valid }
         end
 
         context "and body min length is zero" do
@@ -146,7 +237,7 @@ module Decidim::DecidimAwesome
         context "and title max caps percent empty" do
           let(:validate_title_max_caps_percent) { nil }
 
-          it { is_expected.to be_invalid }
+          it { is_expected.not_to be_valid }
         end
 
         context "and title max caps percent is zero" do
@@ -158,7 +249,7 @@ module Decidim::DecidimAwesome
         context "and title max caps percent is bigger than 100" do
           let(:validate_title_max_caps_percent) { 101 }
 
-          it { is_expected.to be_invalid }
+          it { is_expected.not_to be_valid }
         end
 
         context "and body start with caps is false" do
@@ -170,7 +261,7 @@ module Decidim::DecidimAwesome
         context "and body max caps percent empty" do
           let(:validate_body_max_caps_percent) { nil }
 
-          it { is_expected.to be_invalid }
+          it { is_expected.not_to be_valid }
         end
 
         context "and body max caps percent is zero" do
@@ -182,31 +273,31 @@ module Decidim::DecidimAwesome
         context "and body max caps percent is bigger than 100" do
           let(:validate_body_max_caps_percent) { 101 }
 
-          it { is_expected.to be_invalid }
+          it { is_expected.not_to be_valid }
         end
 
         context "and title max marks together is empty" do
           let(:validate_title_max_marks_together) { nil }
 
-          it { is_expected.to be_invalid }
+          it { is_expected.not_to be_valid }
         end
 
         context "and title max marks together is zero" do
           let(:validate_title_max_marks_together) { 0 }
 
-          it { is_expected.to be_invalid }
+          it { is_expected.not_to be_valid }
         end
 
         context "and body max marks together is empty" do
           let(:validate_body_max_marks_together) { nil }
 
-          it { is_expected.to be_invalid }
+          it { is_expected.not_to be_valid }
         end
 
         context "and body max marks together is zero" do
           let(:validate_body_max_marks_together) { 0 }
 
-          it { is_expected.to be_invalid }
+          it { is_expected.not_to be_valid }
         end
       end
     end

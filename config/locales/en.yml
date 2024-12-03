@@ -3,12 +3,15 @@ en:
   activemodel:
     attributes:
       config:
-        additional_proposal_sortings: Enabled additional sorting options
-        allow_images_in_full_editor: Allow images in the full HTML editor
-        allow_images_in_markdown_editor: Allow images in the markdown editor
+        additional_proposal_sortings: Additional sorting options enabled
+        allow_images_in_editors: Allow images in the HTML editor
         allow_images_in_proposals: Allow images in the proposals editor
-        allow_images_in_small_editor: Allow images in the minimal HTML editor
+        allow_videos_in_editors: Allow videos in the HTML editor
         auto_save_forms: Auto save forms in local storage
+        force_authorization_after_login: Force authorization after login/registering
+        force_authorization_help_text: Help text for the authorization page
+        force_authorization_with_any_method: Allow access if any of the authorizations
+          is granted (by default, all are required)
         intergram_auto_no_response: A message that is sent one minute after the user
           sends its first message and no response was received
         intergram_auto_response: A message that is sent immediately after the user
@@ -24,9 +27,11 @@ en:
         intergram_use_floating_button: If checked, the closed chat is always a button
           instead of a text
         proposal_custom_fields: Custom fields %{id}
+        proposal_private_custom_fields: Private Custom fields %{id}
+        scoped_admin_styles: Custom styles %{id}
         scoped_admins: Scoped admins group %{id}
         scoped_styles: Custom styles %{id}
-        use_markdown_editor: Use a Markdown editor instead of the HTML editor
+        user_timezone: Allow users to set their timezone in their profile
         validate_body_max_caps_percent: Maximum allowed percentage of capital letters
           for the body
         validate_body_max_marks_together: Maximum consecutive marks symbols allowed
@@ -56,10 +61,15 @@ en:
         target: Opens in
         url: URL
         visibility: Visibility
-      proposal:
-        proposal_custom_fields: Custom fields
+      organization:
+        awesome_admins_available_authorizations: Allow admins to manually verify users
+          with these authorizations
+      user:
+        user_time_zone: Personal timezone
   decidim:
     admin:
+      actions:
+        manage: Manage
       filters:
         admin_accountability:
           admin_role_type:
@@ -89,7 +99,6 @@ en:
               frameBorder="0" allowFullscreen src="..."></iframe>. Content will be
               sanitized from other HTML tags. Ensure to use 100% as width to fill
               the screen.'
-            no_margins: No margins between the iframe and the rest of the page
             viewport_width: Limit maximum width to the application viewport
           step:
             announcement: Announcement
@@ -123,10 +132,10 @@ en:
         settings:
           global:
             awesome_voting_manifest: Support type
-            awesome_voting_manifest_help_html: <strong class="text-alert">Be aware
-              that changing this setting in the middle of a votation period can result
-              in innacurate or unexpected results.</strong><br>Note also that this
-              setting can only be edited if the component has no supports yet.
+            awesome_voting_manifest_help_html: <span class="text-alert">Be aware that
+              changing this setting in the middle of a votation period can result
+              in innacurate or unexpected results.</span><br>Note also that this setting
+              can only be edited if the component has no supports yet.
             awesome_voting_manifest_options:
               default: Simple vote (default)
               voting_cards: Voting using coloured cards
@@ -135,6 +144,7 @@ en:
               supported_first: Supported first
               supported_last: Supported last
               za: Z-A (Reverse alphabetical)
+            limit_pending_amendments: Allow only one pending amendment on each proposal.
             sort_orders_enabled: Enabled sorting types
             voting_cards_box_title: Title for the voting box
             voting_cards_box_title_help: Default is "Vote on this proposal". Use "-"
@@ -153,7 +163,12 @@ en:
               supported_last: Supported last
               za: Z-A (Reverse alphabetical)
     decidim_awesome:
+      account:
+        timezone_select:
+          time_zone_helper: Use your personal time zone to display dates in your local
+            time when you are logged in.
       admin:
+        actions: Actions
         admin_accountability:
           admin_roles:
             admin: Super admin
@@ -197,6 +212,34 @@ en:
             collaborator: Collaborator
             moderator: Moderator
             valuator: Valuator
+        admin_authorizations:
+          authorization:
+            confirm_destroy: Are you sure you want to destroy this authorization?
+              This might affect the user's access to the platform.
+            destroy: Destroy
+            granted_at: Granted at %{date}
+            metadata: Contains metadata? %{metadata}
+          authorization_destroyed: Authorization successfully destroyed.
+          authorization_not_destroyed: Authorization could not be destroyed!
+          authorization_transferred: 'Warning: There was verification conflict and
+            the verification has been transferred to %{user}'
+          conflict: There is a conflict with an existing authorization
+          conflict_help_html: "You must solve the conflict with the user %{user} before
+            you can authorize the user with this authorization.\n<br><br>\nA verfication
+            conflict happens when another user has the same data as the user you are
+            trying to authorize. \nYou can solve this conflict by removing the conflicting
+            authorization from the other user or using different data for this user.\n"
+          edit:
+            authorize: Authorize %{user} with %{name}
+            do_it_if_sure: Do this only if you are sure that the user has this authorization.
+            force_verification: Force verification with the current data
+            force_verification_help: Verification has failed, but you can force it
+              if you are sure the user has this authorization.
+            force_verification_reason: 'Give a reason to force the verification:'
+            warning: 'Warning: By forcing this authorization, you are overriding the
+              user''s current authorization status.'
+          user_authorized: "%{user} successfully authorized with %{name}"
+          user_not_authorized: "%{user} could not be authorized with %{name}"
         checks:
           index:
             admin_head_tags: Awesome tags included in the admin application header
@@ -216,10 +259,9 @@ en:
               Since version 0.25, Decidim uses a new technology to upload files.<br>
               It looks that this installation needs to migrate <strong>%{total}</strong> of the old images to the new system.<br>
               You can start the process now and it will be performed in the background.
-            start_image_migrations: "\U0001F449 Start the migration process now"
-            title: System compatibility checks
+            start_image_migrations: "👉 Start the migration process now"
         config:
-          caution: 'NOTE: This feature heavily modifies some default behaviours that
+          caution: 'NOTE: This feature heavily modifies some default behaviors that
             might lead to unexpected results. Use it with caution!'
           constraints:
             add_condition: Add case
@@ -259,14 +301,13 @@ en:
               incorrect_css: 'CSS in box #%{key} is invalid'
               incorrect_json: 'JSON definition in box #%{key} is invalid'
             help:
-              allow_images_in_full_editor: This will add an image uploader icon in
-                all the editors WYSIWYG with the full toolbar enabled.
-              allow_images_in_markdown_editor: This will allow markdown editor to
-                upload images by copy & paste or drag & drop.
+              allow_images_in_editors: This will add an image uploader icon in all
+                the WYSIWYG editors
               allow_images_in_proposals: This will allow to upload images in the proposals
-                editor, available to any user
-              allow_images_in_small_editor: This will add an image uploader icon in
-                all the editors WYSIWYG with minimal options in the toolbar enabled.
+                editor, available to any user. Images will be presented as links in
+                the public proposal view.
+              allow_videos_in_editors: This will add an video link icon in all the
+                WYSIWYG editors
               auto_save_forms: This will use LocalStorage to automatically save data
                 introduced by users in surveys and other forms while they are filling
                 it. Data will be restored in a future visit with the same browser
@@ -276,6 +317,14 @@ en:
               drag_and_drop_supported: When uploading images, Drag & Drop is supported.
                 Images will be uploaded to the server and inserted as external resources
                 (it doesn't use base64 inline encoding).
+              force_authorization_after_login: 'If enabled, users will be redirected
+                to the authorization page after login or registration if some of the
+                specified authorizations are not granted. This is useful if you want
+                to force users to be verified with a specific authorization before
+                they can login at all (ie: to prevent spam).'
+              force_authorization_help_text: Add a custom text to explain why authorization
+                is required. Also make sure you add a contact method in case users
+                need help.
               intergram_about: Intergram uses Telegram messenger to handle a live
                 support chat widget embedded in the bottom of the page.
               intergram_config: Invite the <a href="https://web.telegram.org/#/im?p=@IntergramBot">@Intergram
@@ -299,6 +348,19 @@ en:
                 instead of \"Address\"\nOr use your own keys in combination with other
                 tools to define translations (eg: using the module Term Customizer):\n
                 - \"myapp.custom_fields.bio\" instead of \"Biography\""
+              proposal_private_custom_fields: Similar as public fields, but this information
+                won't be disclosed publicly (only admins will have access to it).
+              proposal_private_custom_fields_translations: |
+                Private custom fields are displayed in distinct box with this information text:
+                %{warning}
+                This text can be customized with a custom translation by using the key:
+                %{key}
+              scoped_admin_styles: Be aware that hidding things here might left the
+                admin unusable. Please act with caution.
+              scoped_admin_styles_variables: 'You can use the following CSS variables
+                for organization customized color:'
+              scoped_admin_styles_warning: "<strong>Warning</strong>: In here add
+                custom CSS that applies only in this admin."
               scoped_admins: Promote regular user to admins that can only administrate
                 certain parts of the public web (use the restrictions editor for that).
                 Note that users who already have regular admin permissions will be
@@ -307,9 +369,9 @@ en:
                 of the public web (use the restrictions editor for that)
               scoped_styles_variables: 'You can use the following CSS variables for
                 organization customized colors:'
-              use_markdown_editor: This will substitute the Quill WYSIWYG editor,
-                to use a Markdown editor instead. Text will be converted and saved
-                as HTML in the database.
+              user_timezone: This will a add a select box in the user profile to set
+                the timezone. This will be used to show dates and times in the user
+                local time.
               validate_body_max_caps_percent: Zero won't allow any capital letter,
                 100 will force to write everything in capital letters
               validate_body_max_marks_together: 'Limit the number of question and
@@ -324,31 +386,57 @@ en:
                 ''!!!'' won''t be allowed in the text'
               validate_title_min_length: Title is always mandatory and this number
                 cannot be zero
+              verifications_html: |
+                Here you can make some tweaks to the verification process.<br>
+                <b>NOTE:</b> Be aware that changing these settings might prevent some users from accessing the platform. Use it with caution!<br><br>
+                Also note that these settings are applied to all users. Admins will always have access to the admin backend though.
             validators:
               body: User input validations for the "body" field
               title: User input validations for the "title" field
           form_proposal_custom_fields:
+            delete: Delete
             new: Add a new "custom fields" box
             remove: Remove this "custom fields" box
             sure_to_remove: Are you sure you want to destroy this fields box?
+          form_proposal_private_custom_fields:
+            delete: Delete
+            new: Add a new "private custom fields" box
+            remove: Remove this "private custom fields" box
+            sure_to_remove: Are you sure you want to destroy this private fields box?
+          form_scoped_admin_styles:
+            delete: Delete
+            new: Add a new "admin panel" CSS box
+            remove: Remove this CSS box
+            sure_to_remove: Are you sure you want to destroy this CSS box?
           form_scoped_admins:
+            delete: Delete
             new: Add a new "Scoped Admins" group
             remove: Remove this "Scoped Admins" group
             sure_to_remove: Are you sure you want to destroy this "Scoped Admins"
               group?
           form_scoped_styles:
-            new: Add a new CSS box
+            delete: Delete
+            new: Add a new "public frontend" CSS box
             remove: Remove this CSS box
             sure_to_remove: Are you sure you want to destroy this CSS box?
           none: "⛔ Never! - Deactivate any other constraint"
           process_groups: Process groups
-          rich_text_editor_in_public_views: 'NOTE: "Rich text editor for participants"
-            is enabled, this option won''t apply. Use the editors hacks instead to
-            enable images in proposals.'
           show:
             title: Tweaks for %{setting}
             update: Update configuration
           system: Everywhere except participatory spaces
+          title:
+            admins: Scoped Admins
+            editors: Editor Hacks
+            livechat: Live Chat
+            proposal_custom_fields: 'Proposals Custom Fields: Public fields'
+            proposal_private_custom_fields: 'Proposals Custom Fields: Private fields'
+            proposals: Proposals Hacks
+            scoped_admin_styles: 'Custom Styles: Admin panel'
+            scoped_styles: 'Custom Styles: Public frontend'
+            styles: Custom Styles
+            surveys: Surveys & Forms
+            verifications: Verifications / Authorization Hacks
           update:
             error: Error updating configuration! %{error}
             success: Configuration updated successfully
@@ -409,17 +497,54 @@ en:
           update:
             error: Error updating redirection! %{error}
             success: Redirection updated successfully
+        maintenance:
+          private_data:
+            component: Space / Component
+            confirm_delete: Are you sure you want to delete all private data for this
+              resource? This cannot be undone.
+            delete: Delete all
+            destroying_private_data: Private data for %{title} is set to be destroyed.
+              Please check again in a few minutes.
+            done: Done
+            help_html: |
+              This tool allows you to delete all private data for a specific participatory space or component. This action is irreversible and will remove all private data from the database.
+              <br><br>
+              <strong>What is considered private data?</strong>
+              <br>
+              Private data is any information that is not publicly available and is only accessible to administrators. This, at the moment, includes private custom fields information.
+              <br><br>
+              <strong>What happens when I delete private data?</strong>
+              <br>
+              When you delete private data, all private information for the selected participatory space or component will be permanently removed from the database. A log of this action will be stored in the system for auditing purposes.
+              <br><br>
+              <strong>What happens to public data?</strong>
+              <br>
+              Public data will not be affected by this action. Only private data will be deleted.
+              <br><br>
+              <strong>Is there a minimum time to wait before deleting private data?</strong>
+              <br>
+              Yes, you cannot delete private data if the last update was less than %{time_ago} ago. You can change this configuration in the initializer file.
+            items_count: Total affected
+            last_date: Last update
+            no_data: No private data found older than %{time_ago} ago
+            not_destroyable: This resource cannot be destroyed yet
+            removing: Removing...
+            time_ago: "%{time} ago"
         menu:
           admins: Scoped Admins
-          checks: System Compatibility
           custom_redirects: Custom Redirections
           editors: Editor Hacks
           livechat: Live Chat
+          maintenance:
+            checks: System Compatibility
+            maintenance: Maintenance
+            private_data: Private data
           menu_hacks: Menu Tweaks
           proposal_custom_fields: Proposals Custom Fields
           proposals: Proposals Hacks
           styles: Custom Styles
           surveys: Surveys & Forms
+          verifications: Verifications
         menu_hacks:
           create:
             error: Error creating menu item! %{error}
@@ -445,10 +570,13 @@ en:
           index:
             confirm_destroy: Are you sure to remove this customization?
             edit: Edit
+            home_content_block_menu:
+              title: Global menu home block
+            menu:
+              title: Main menu
             new: New item
             remove: Remove addition
             remove_hack: Remove customization
-            title: Main menu
           new:
             save: Save
             title: New menu item
@@ -457,6 +585,47 @@ en:
             success: Menu item updated successfully
           url_exists: The same URL is already configured, please edit that instead
             of creating it again.
+        officializations:
+          authorizations: Authorizations
+          verification_modal:
+            authorizations_for: Authorizations for %{user}
+            close: Close
+        proposal_custom_fields:
+          menu:
+            title: Public fields
+          private_body: Private body
+          private_data_last_remove: This data was destroyed %{time_ago} ago.
+          private_data_last_update: This data was last updated %{time_ago} ago.
+          proposal_private_custom_fields: Private fields
+          remove_private_data: "👉 You might want to remove it"
+        scoped_admin_styles:
+          menu:
+            title: Admin panel
+        scoped_styles:
+          menu:
+            title: Public frontend
+      admin_log:
+        component:
+          destroy_private_data: "%{user_name} destroyed %{count} items of private
+            data for %{resource_name} in %{space_name}"
+        user:
+          admin_creates_authorization: "%{user_name} verified %{resource_name} with
+            %{handler_name}"
+          admin_destroys_authorization: "%{user_name} destroyed the verification %{handler_name}
+            on %{resource_name}"
+          admin_forces_authorization: "%{user_name} forced the verification %{handler_name}
+            on %{resource_name}. Reason: %{reason}"
+      amendments:
+        modal:
+          amendment_exists: An amendment already exists
+          current_amendment_html: <p>You can <a href="%{amendment_link}">access the
+            current amendment here</a>.</p>
+          dismiss: Ok, got it
+          explanation_html: |
+            <p>Currently, there's another amendment being evaluated for this proposal. In order to create a new one, you must wait until the current one is accepted or rejected.</p>
+            <p>You can also reach the author of this proposal by <a href="%{proposal_link}">leaving a comment</a> and try to speed up the resolution of the current amendment.</p>
+        pending_limit_reached: Sorry, there can only be one pending amendment at a
+          time. Please wait until "%{emendation}" is accepted or rejected.
       config:
         intergram:
           auto_no_response: It seems that no one is available to answer right now.
@@ -517,6 +686,30 @@ en:
           show:
             view_meeting: View meeting
             view_proposal: View proposal
+      proposal_private_custom_fields_disclosure: This information won't be published
+      required_authorizations:
+        index:
+          cancel: I'll do this in another moment, %{link}.
+          granted_title: Granted verifications
+          logout: let me logout
+          missing_title: Not verified yet
+          resume_title: Pending verifications
+          resume_with_method: Resume verification with %{name}
+          title: Verify your identity
+          verify_with_all_these_options: 'Please verify yourself with all these methods
+            before being able to access the platform:'
+          verify_with_any_of_these_options: 'Please verify yourself with at least
+            one of these options before being able to access the platform:'
+          verify_with_method: Verify with %{name}
+      session:
+        authorization_is_required: In order to participate in this platform, you need
+          to authorize your account with a valid authorization (%{authorizations}).
+      system:
+        organizations:
+          admin_allowed_authoritzations_help_html: |
+            Admins will be able to manually verify users with these authorizations.
+            <br>Use this feature with caution, as it can lead to security issues.
+          awesome_tweaks: Decidim Awesome Tweaks
       validators:
         too_much_caps: Is using too many capital letters (over %{percent}% of the
           text)
@@ -525,8 +718,8 @@ en:
           abstained: "✔ Abstained"
           change_vote: Change my vote
           default_box_title: Vote on this proposal
-          default_instructions_html: <p>Please read the election rules carefully to
-            understand how your vote will be used by %{organization}"</p>
+          default_instructions_html: "<p>Please read the election rules carefully
+            to understand how your vote will be used by %{organization}</p>"
           modal:
             cancel: Cancel
             message: Your vote will be considered final on %{date}. You can change
@@ -545,19 +738,30 @@ en:
             weight_2_short: 'Y:'
             weight_3: Green
             weight_3_short: 'G:'
+    meetings:
+      meetings_map:
+        view_meeting: View meeting
     proposals:
+      admin:
+        exports:
+          awesome_private_proposals: Proposals with private data
       proposals:
         orders:
           az: A-Z (Alphabetical)
           supported_first: Supported first
           supported_last: Supported last
           za: Z-A (Reverse alphabetical)
+        proposal:
+          view_proposal: View proposal
   layouts:
     decidim:
-      admin:
-        decidim_awesome:
-          title: Decidim Tweaks
       decidim_awesome:
+        admin:
+          maintenance:
+            title: 'Maintenance tools: %{title}'
+            titles:
+              checks: System Compatibility Checks
+              private_data: Private Data Clean-Up
         awesome_config:
           amendments: Amendments
           autosaved_error: LocalStorage is not supported in your browser, form cannot

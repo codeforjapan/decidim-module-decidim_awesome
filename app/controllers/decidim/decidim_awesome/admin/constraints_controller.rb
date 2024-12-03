@@ -6,19 +6,22 @@ module Decidim
       # Constraints configuration controller for config keys
       class ConstraintsController < DecidimAwesome::Admin::ApplicationController
         include NeedsAwesomeConfig
+        include Decidim::Headers::HttpCachingDisabler
         helper ConfigConstraintsHelpers
 
         layout false
-        before_action do
-          enforce_permission_to :edit_config, constraint_key
-        end
+        helper_method :constraint_key
 
-        def new
-          @form = form(ConstraintForm).from_params(filtered_params, setting: current_setting)
+        before_action do
+          render :no_permissions unless allowed_to? :edit_config, constraint_key
         end
 
         def show
           @form = form(ConstraintForm).from_params(constraint.settings.merge(filtered_params))
+        end
+
+        def new
+          @form = form(ConstraintForm).from_params(filtered_params, setting: current_setting)
         end
 
         def create
@@ -39,11 +42,11 @@ module Decidim
 
             on(:invalid) do |message|
               render json: {
-                id: params[:id],
-                key: current_setting.var,
-                message: I18n.t("decidim_awesome.admin.constraints.create.error", scope: "decidim"),
-                error: message
-              },
+                       id: params[:id],
+                       key: current_setting.var,
+                       message: I18n.t("decidim_awesome.admin.constraints.create.error", scope: "decidim"),
+                       error: message
+                     },
                      status: :unprocessable_entity
             end
           end
@@ -67,11 +70,11 @@ module Decidim
 
             on(:invalid) do |message|
               render json: {
-                id: params[:id],
-                key: constraint.awesome_config.var,
-                message: I18n.t("decidim_awesome.admin.constraints.update.error", scope: "decidim"),
-                error: message
-              },
+                       id: params[:id],
+                       key: constraint.awesome_config.var,
+                       message: I18n.t("decidim_awesome.admin.constraints.update.error", scope: "decidim"),
+                       error: message
+                     },
                      status: :unprocessable_entity
             end
           end
@@ -94,11 +97,11 @@ module Decidim
 
             on(:invalid) do |message|
               render json: {
-                id: params[:id],
-                key: constraint.awesome_config.var,
-                message: I18n.t("decidim_awesome.admin.constraints.destroy.error", scope: "decidim"),
-                error: message
-              },
+                       id: params[:id],
+                       key: constraint.awesome_config.var,
+                       message: I18n.t("decidim_awesome.admin.constraints.destroy.error", scope: "decidim"),
+                       error: message
+                     },
                      status: :unprocessable_entity
             end
           end
@@ -127,10 +130,14 @@ module Decidim
           case key
           when /^scoped_style_/
             :scoped_styles
+          when /^scoped_admin_style_/
+            :scoped_admin_styles
           when /^scoped_admin_/
             :scoped_admins
           when /^proposal_custom_field_/
             :proposal_custom_fields
+          when /^proposal_private_custom_field_/
+            :proposal_private_custom_fields
           else
             key
           end

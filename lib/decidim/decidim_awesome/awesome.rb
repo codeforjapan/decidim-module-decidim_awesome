@@ -10,8 +10,12 @@ module Decidim
     autoload :MenuHacker, "decidim/decidim_awesome/menu_hacker"
     autoload :CustomFields, "decidim/decidim_awesome/custom_fields"
     autoload :VotingManifest, "decidim/decidim_awesome/voting_manifest"
+    autoload :Lock, "decidim/decidim_awesome/lock"
+    autoload :TranslatedCustomFieldsType, "decidim/decidim_awesome/api/types/translated_custom_fields_type"
+    autoload :LocalizedCustomFieldsType, "decidim/decidim_awesome/api/types/localized_custom_fields_type"
+    autoload :Authorizator, "decidim/decidim_awesome/authorizator"
 
-    # Awesome coms with some components for participatory spaces
+    # Awesome comes with some components for participatory spaces
     # Currently :awesome_map and :awesome_iframe, list them here
     # if you wan to disable them
     # NOTE if you have spaces with some of these components already configured
@@ -32,11 +36,11 @@ module Decidim
     #   true  => always true but admins can still restrict its scope
     #   false => default false, admins can turn it true
     #   :disabled => false and non available, hidden from admins
-    config_accessor :allow_images_in_full_editor do
+    config_accessor :allow_images_in_editors do
       false
     end
 
-    config_accessor :allow_images_in_small_editor do
+    config_accessor :allow_videos_in_editors do
       false
     end
 
@@ -44,28 +48,20 @@ module Decidim
       false
     end
 
-    config_accessor :use_markdown_editor do
-      false
-    end
-
-    config_accessor :allow_images_in_markdown_editor do
-      false
-    end
-
     # used to save forms in localstorage
     config_accessor :auto_save_forms do
-      false
+      true
     end
 
     # Live chat widget linked to Telegram account or group
     # In the admin side only
     config_accessor :intergram_for_admins do
-      false
+      true
     end
 
     # In the public side only
     config_accessor :intergram_for_public do
-      false
+      true
     end
 
     # Configuration options to handle different validations in proposals
@@ -121,7 +117,17 @@ module Decidim
       ]
     end
 
-    # allows admins to created specific CSS snippets affecting only some specific parts
+    # Allows admins to limit the amount of pending amendments to (currently) one per proposal before it's accepted.
+    # Once a pending amendment is accepted, a new on can be created.
+    # Note that this does not limit the number of amendment per se, the admin has to set the limit in the proposal's component configuration.
+    # set to :disable to will prevent admins to set an amendment's limit in the proposal's component configuration.
+    # if set to "true" the checkbox will be checked by default
+    # if set to "false" the checkbox will be unchecked by default
+    config_accessor :allow_limiting_amendments do
+      false
+    end
+
+    # allows admins to created specific CSS snippets affecting only some public frontend specific parts
     # Valid values differ a little from the previous convention:
     #   :disabled => false and non available, hidden from admins
     #   Hash => hash of different css text, each key will be used for the contraints
@@ -130,6 +136,18 @@ module Decidim
     #      some_identifier: ".wrapper { background: red; }"
     #   }
     config_accessor :scoped_styles do
+      {}
+    end
+
+    # allows admins to created specific CSS snippets affecting only some admin specific parts
+    # Valid values differ a little from the previous convention:
+    #   :disabled => false and non available, hidden from admins
+    #   Hash => hash of different css text, each key will be used for the contraints
+    # Admins create this hash dynamically but some pre-defined css boxes can be created here as:
+    #   {
+    #      some_identifier: ".wrapper { background: red; }"
+    #   }
+    config_accessor :scoped_admin_styles do
       {}
     end
 
@@ -146,6 +164,59 @@ module Decidim
       {}
     end
 
+    # Same as proposal_custom_fields but for generating private fields than can be read only by admins
+    config_accessor :proposal_private_custom_fields do
+      {}
+    end
+
+    # whether to add a select to user's profile to allow them to select their preferred time zone
+    # if set to false, the select won't be shown but it can still be configured by the admins
+    # if set to :disabled the feature will be completly removed
+    config_accessor :user_timezone do
+      false
+    end
+
+    # Forces the user to authorize using some registered verification flow in order to access the platform
+    # if set to an empty array, the user will be able to access the platform without any verification but admins can still enforce it
+    # if set to :disabled the feature will be completly removed
+    # You can initialize some default verification workflow manifests
+    config_accessor :force_authorization_after_login do
+      []
+    end
+
+    # By default all methods specified in force_authorization_after_login must be granted in order to access the platform
+    # if set to true, the user will be able to access the platform if any of the methods is granted
+    config_accessor :force_authorization_with_any_method do
+      false
+    end
+
+    # When force_authorization_after_login is enabled, this text will be shown to the user as a help text (ie: add a contact information)
+    config_accessor :force_authorization_help_text do
+      {}
+    end
+
+    # Allows admins to manually authorize users with the specified methods
+    # if set to an empty array, the admins will not be able to authorize users but the system admin can still configure it
+    # if set to :disabled the feature will be completly removed
+    config_accessor :admins_available_authorizations do
+      []
+    end
+
+    # This controllers will be skipped from the authorization check
+    config_accessor :force_authorization_allowed_controller_names do
+      %w(account pages)
+    end
+
+    # How old must be the private data to be considered expired and therefore presented to the admins for deletion
+    config_accessor :private_data_expiration_time do
+      3.months
+    end
+
+    # How long must be the private data prevented from being deleted again after being scheduled for deletion
+    config_accessor :lock_time do
+      1.minute
+    end
+
     # allows to keep modifications for the main menu
     # can return :disabled to completly remove this feature
     # otherwise it should be an array (some overrides can be specified by default):
@@ -157,6 +228,10 @@ module Decidim
     #    }
     # ]
     config_accessor :menu do
+      []
+    end
+
+    config_accessor :home_content_block_menu do
       []
     end
 
@@ -262,6 +337,13 @@ module Decidim
       [:proposals, :reporting_propposals]
     end
 
+    # A URL where to obtain the translations for the FormBuilder component
+    # you can a custom place if you are worried about the CDN geolocation
+    # Download them from https://github.com/kevinchappell/formBuilder-languages
+    config_accessor :form_builder_langs_location do
+      "https://cdn.jsdelivr.net/npm/formbuilder-languages@1.1.0/"
+    end
+
     # Public: Stores an instance of ContentBlockRegistry
     def self.voting_registry
       @voting_registry ||= Decidim::ManifestRegistry.new("decidim_awesome/voting")
@@ -273,25 +355,43 @@ module Decidim
     # pass a single config var or an array of them
     # any non disabled match will return as true
     def self.possible_additional_proposal_sortings
-      @possible_additional_proposal_sortings ||= additional_proposal_sortings.to_a.filter_map do |sort|
+      return [] unless additional_proposal_sortings.is_a?(Array)
+
+      @possible_additional_proposal_sortings ||= additional_proposal_sortings.filter_map do |sort|
         next unless sort.to_sym.in?([:az, :za, :supported_first, :supported_last])
 
         sort.to_s
       end
     end
 
-    def self.collation_for(locale)
-      @collation_for ||= {}
-      @collation_for[locale] ||= begin
-        res = ActiveRecord::Base.connection.execute(Arel.sql("SELECT collname FROM pg_collation WHERE collname LIKE '#{locale}-x-icu' LIMIT 1")).first
-        res ||= ActiveRecord::Base.connection.execute(Arel.sql("SELECT collname FROM pg_collation WHERE collname LIKE '#{locale[0..1]}%' LIMIT 1")).first
-        res["collname"] if res
-      end
+    # appends to a hash a new value in a specified position so that the hash becomes:
+    # { a: 1, b: 2, c: 3 } => append_hash(hash, :b, :d, 4) => { a: 1, b: 2, d: 4, c: 3 }
+    # if key is not found then it will be inserted at the end
+    def self.hash_append!(hash, after_key, key, value)
+      insert_at = hash.to_a.index(hash.assoc(after_key))
+      insert_at = insert_at.nil? ? hash.size : insert_at + 1
+      hash.replace(hash.to_a.insert(insert_at, [key, value]).to_h)
     end
 
-    def self.enabled?(config_vars)
-      config_vars = [config_vars] unless config_vars.respond_to?(:any?)
+    # prepends to a hash a new value in a specified position so that the hash becomes:
+    # { a: 1, b: 2, c: 3 } => prepend_hash(hash, :b, :d, 4) => { a: 1, d: 4, b: 2, c: 3 }
+    # if key is not found then it will be inserted at the beggining
+    def self.hash_prepend!(hash, before_key, key, value)
+      insert_at = hash.to_a.index(hash.assoc(before_key))
+      insert_at = 0 if insert_at.nil?
+      hash.replace(hash.to_a.insert(insert_at, [key, value]).to_h)
+    end
 
+    def self.collation_for(locale)
+      @collation_for ||= {}
+      @collation_for[locale] ||= ["#{locale}-x-icu", "#{locale[0..1]}%"].filter_map do |loc|
+        sql = ApplicationRecord.sanitize_sql(["SELECT collname FROM pg_collation WHERE collname LIKE ? LIMIT 1", loc])
+        res = ActiveRecord::Base.connection.execute(sql).first
+        res["collname"] if res
+      end.first
+    end
+
+    def self.enabled?(*config_vars)
       config_vars.any? do |item|
         next unless config.has_key?(item.to_sym)
 
@@ -309,8 +409,10 @@ module Decidim
       registered_components << [manifest, block]
     end
 
+    # version 0.11 is compatible only with decidim 0.28
     def self.legacy_version?
-      Decidim.version[0..3] == "0.26"
+      # Decidim.version[0..3] == "0.28"
+      false
     end
   end
 end

@@ -3,11 +3,13 @@ cs:
     attributes:
       config:
         additional_proposal_sortings: Povoleny další možnosti řazení
-        allow_images_in_full_editor: Povolit obrázky v kompletním HTML editoru
-        allow_images_in_markdown_editor: Povolit obrázky v editoru markdown
+        allow_images_in_editors: Povolit obrázky v HTML editoru
         allow_images_in_proposals: Povolit obrázky v editoru návrhů
-        allow_images_in_small_editor: Povolit obrázky v minimálním HTML editoru
+        allow_videos_in_editors: Povolit videa v HTML editoru
         auto_save_forms: Automaticky ukládat formuláře v místním úložišti
+        force_authorization_after_login: Vynutit autorizaci po přihlášení/registraci
+        force_authorization_help_text: Text nápovědy pro autorizační stránku
+        force_authorization_with_any_method: Povolit přístup, pokud je udělen některou z autorizací (ve výchozím nastavení jsou vyžadovány vše)
         intergram_auto_no_response: Zpráva, která je odeslána jednu minutu poté, co uživatel odešle svou první zprávu a nebyla obdržena odpověď
         intergram_auto_response: Zpráva, která je odeslána okamžitě poté, co uživatel odešle svou první zprávu
         intergram_chat_id: ID Chatu
@@ -19,9 +21,11 @@ cs:
         intergram_title_open: Titulek otevřeného chatu
         intergram_use_floating_button: Je-li zaškrtnuto, uzavřený chat je vždy tlačítko místo textu
         proposal_custom_fields: 'Uživatelská pole #%{id}'
+        proposal_private_custom_fields: Soukromá vlastní pole %{id}
+        scoped_admin_styles: Vlastní styly číslo %{id}
         scoped_admins: 'Skupina Škálovaní administrátoři #%{id}'
         scoped_styles: Vlastní styly číslo %{id}
-        use_markdown_editor: Použít Markdown editor namísto HTML editoru
+        user_timezone: Umožnit uživatelům nastavit časové pásmo v profilu
         validate_body_max_caps_percent: Maximální povolený procentní podíl velkých písmen pro tělo zprávy
         validate_body_max_marks_together: Maximální počet po sobě jdoucích značek povolených v těle zprávy
         validate_body_min_length: Minimální požadované znaky pro tělo zprávy
@@ -47,10 +51,14 @@ cs:
         target: Otevře se v
         url: URL
         visibility: Viditelnost
-      proposal:
-        proposal_custom_fields: Vlastní pole
+      organization:
+        awesome_admins_available_authorizations: Povolit správcům ručně ověřit uživatele s těmito autorizacemi
+      user:
+        user_time_zone: Osobní časové pásmo
   decidim:
     admin:
+      actions:
+        manage: Spravovat
       filters:
         admin_accountability:
           admin_role_type:
@@ -77,7 +85,6 @@ cs:
             announcement: Oznámení
             iframe: Kód Iframe
             iframe_help: 'Zadejte kód jako html: <iframe width="100%" height="700" frameBorder="0" allowFullscreen src="..."></iframe>. Obsah bude vylepšen z jiných HTML tagů. Pro vyplnění obrazovky použijte 100% šířku.'
-            no_margins: Mezi iframe a zbytkem stránky nejsou žádné okraje
             viewport_width: Omezit maximální šířku na zobrazení aplikace
           step:
             announcement: Oznámení
@@ -119,6 +126,7 @@ cs:
               supported_first: Nejdříve podporováno
               supported_last: Naposledy podporováno
               za: Z-A (obrácená abeceda)
+            limit_pending_amendments: Povolit pouze jeden čekající pozměňovací návrh ke každému návrhu.
             sort_orders_enabled: Typy řazeníí povoleny
             voting_cards_box_title: Název hlasovacího pole
             voting_cards_box_title_help: Výchozí hodnota je "Hlasovat pro tento návrh". Použijte "-" pro jeho schování.
@@ -133,7 +141,11 @@ cs:
               supported_last: Naposledy podporováno
               za: Z-A (obrácená abeceda)
     decidim_awesome:
+      account:
+        timezone_select:
+          time_zone_helper: Použijte vaše osobní časové pásmo pro zobrazení dat v místním čase, když jste přihlášeni.
       admin:
+        actions: Akce
         admin_accountability:
           admin_roles:
             admin: Super správce
@@ -170,6 +182,26 @@ cs:
             collaborator: Spolupracovník
             moderator: Moderátor
             valuator: Hodnotitel
+        admin_authorizations:
+          authorization:
+            confirm_destroy: Opravdu chcete zničit tuto autorizaci? To může ovlivnit přístup uživatele k platformě.
+            destroy: Zničit
+            granted_at: Uděleno v %{date}
+            metadata: Obsahuje metadata? %{metadata}
+          authorization_destroyed: Autorizace byla úspěšně zničena.
+          authorization_not_destroyed: Autorizaci nelze zničit!
+          authorization_transferred: 'Varování: Došlo k ověřovacímu konfliktu a ověření bylo převedeno na %{user}'
+          conflict: Existuje konflikt s existující autorizací
+          conflict_help_html: "Musíte vyřešit konflikt s uživatelem %{user} předtím, než budete moci autorizovat uživatele s touto autorizací.\n<br><br>\nKonflikt ověření se stane, když jiný uživatel má stejná data jako uživatel, který se pokoušíte autorizovat \nTento konflikt můžete vyřešit odstraněním konfliktní autorizace od jiného uživatele nebo použitím jiných dat tohoto uživatele.\n"
+          edit:
+            authorize: Autorizovat %{user} s %{name}
+            do_it_if_sure: Udělejte to pouze v případě, že jste si jisti, že uživatel má tuto autorizaci.
+            force_verification: Vynutit ověření s aktuálními údaji
+            force_verification_help: Ověření se nezdařilo, ale pokud jste si jisti, že uživatel má tuto autorizaci, můžete ho vynutit.
+            force_verification_reason: 'Uveďte důvod pro vynucení ověření:'
+            warning: 'Upozornění: Vynucením této autorizace přepíšete aktuální stav autorizace uživatele.'
+          user_authorized: "%{user} úspěšně autorizován s %{name}"
+          user_not_authorized: "%{user} nemohl být autorizován s %{name}"
         checks:
           index:
             admin_head_tags: Úžasné tagy zahrnuté v hlavičce administrace aplikace
@@ -188,7 +220,6 @@ cs:
               Zdá se, že tato instalace potřebuje přesunout <strong>%{total}</strong> starých obrázků do nového systému.<br>
               Můžete zahájit proces nyní a bude probíhat na pozadí.
             start_image_migrations: "\U0001F449 Zahájit proces migrace"
-            title: Kontroly kompatibility systému
         config:
           caution: 'POZNÁMKA: Tato funkce silně mění některé výchozí chování, které by mohlo vést k neočekávaným výsledkům. Používejte ji s opatrností!'
           constraints:
@@ -220,55 +251,94 @@ cs:
             additional_proposal_sortings:
               enable_all: Povolit všechny další možnosti řazení
               help: Tyto možnosti řazení jsou navíc k výchozím možnostem. Nezapomeňte, že si můžete vybrat výchozí pořadí v nastavení komponenty návrhu.
+              title: Přizpůsobit možnosti řazení seznamu návrhů
             edit_label: Přejmenovat štítek
             errors:
               incorrect_css: 'CSS v poli #%{key} je neplatné'
               incorrect_json: 'Definice JSON v poli #%{key} je neplatná'
             help:
-              allow_images_in_full_editor: Tímto se přidá ikona pro nahrávání obrázků ve všech editorech WYSIWYG s povoleným plným nástrojovým řádkem.
-              allow_images_in_markdown_editor: To umožní editoru markdown nahrávat obrázky pomocí kopírování a vkládání nebo přetažení.
+              allow_images_in_editors: Toto přidá ikonu pro nahrávání obrázků ve všech WYSIWYG editorech
               allow_images_in_proposals: Toto umožní nahrávat obrázky do editoru návrhů, které jsou k dispozici každému uživateli
-              allow_images_in_small_editor: Tímto se přidá ikona pro nahrávání obrázků ve všech editorech WYSIWYG s minimálními možnostmi v panelu nástrojů.
+              allow_videos_in_editors: Toto přidá ikonu video odkazu ve všech WYSIWYG editorech
               auto_save_forms: Toto bude používat místní úložiště pro automatické ukládání dat zavedených uživateli do průzkumů a jiných formulářů během vyplňování. Data budou obnovena v budoucí návštěvě stejného prohlížeče v případě, že formulář nebude odeslán. Pokud je formulář odeslán, data budou odstraněna. Pokud uživatelé odstraní svá data z místního úložiště, data nebudou obnovena.
               drag_and_drop_supported: Při nahrávání obrázků je podporováno vložení přetažením. Obrázky budou nahrány na server a vloženy jako externí zdroje (nepoužívá base64 inline kódování).
+              force_authorization_after_login: 'Pokud je povoleno, uživatelé budou po přihlášení nebo registraci přesměrováni na autorizační stránku, pokud nejsou uděleny některé z zadaných autorizací. To je užitečné, pokud chcete donutit uživatele k ověření pomocí specifické autorizace, než se budou moci vůbec přihlásit (např.: zabránit spamu).'
+              force_authorization_help_text: Přidejte vlastní text, který vysvětlí proč je potřeba autorizace. Také se ujistěte, že přidáte kontaktní metodu pro případ, že uživatelé potřebují pomoc.
               intergram_about: Intergram používá Telegram messenger pro zpracování widgetu live podpory v dolní části stránky.
               intergram_config: 'Pozvěte <a href="https://web.telegram.org/#/im?p=@IntergramBot">@Intergram bota</a> do vaší skupiny nebo začněte chatovat přímo. <a href="https://github.com/idoco/intergram#embed-intergram-in-your-website-with-these-2-simple-steps">+ info</a>'
               original_editor_override: Od verze 0.26 je možné nahrávat obrázky do editorů (pouze pro administrátory). Proto zde nastavení obrázků ovlivňuje pouze veřejné editory (správce je bude mít vždy k dispozici).
               proposal_custom_fields: Vytvoření vlastních polí návrhu, která se použijí pouze v určitých částech veřejného webu (použijte k tomu editor omezení)
               proposal_custom_fields_example: Data jsou uložena v objektu XML pomocí kompatibilních atributů HTML (prvky dl,dt,dd), které v běžném návrhu nahrazují "tělo".
               proposal_custom_fields_translations: "Štítky, nápověda, zástupné symboly a výchozí hodnoty mohou používat vlastní překlady aplikace. \nPro to použijte klíč i18n (musí obsahovat alespoň jednu tečku), místo použití textového literálu.\nNapříklad:\n- \"activemodel.attributes.proposal.title\" namísto \"Title\"\n- \"activemodel.attributes.proposal.address\" namísto \"Adresa\"\nNebo použijte vlastní klíče v kombinaci s jinými nástroji pro definování překladů (např. pomocí úpravy termínu modulu):\n - \"myapp.custom_fields.bio\" namísto „Životopis“"
+              proposal_private_custom_fields: Podobné jako veřejná pole, ale tyto informace nebudou zveřejněny (k nim budou mít přístup pouze administrátoři).
+              proposal_private_custom_fields_translations: |
+                Soukromá vlastní pole jsou zobrazena v jiném poli s tímto informačním textem:
+                %{warning}
+                Tento text lze přizpůsobit vlastním překladem pomocí klíče:
+                %{key}
+              scoped_admin_styles: Uvědomte si, že skrývání věcí zde může zanechat administrátorské prostředí nepoužitelné. Postupujte prosím opatrně.
+              scoped_admin_styles_variables: 'Můžete použít následující CSS proměnné pro nastavené barvy organizace:'
+              scoped_admin_styles_warning: "<strong>Varování</strong>: Zde přidejte vlastní CSS které platí pouze v tomto administrátoru."
               scoped_admins: Povýšení běžného uživatele na administrátora, který může spravovat pouze určité části veřejného webu (k tomu použijte editor omezení). Všimněte si, že uživatelé, kteří již mají oprávnění běžného správce, budou ignorováni.
               scoped_styles: Vytvořte vlastní CSS aplikovaný pouze na určitých částech veřejného webu (použijte pro to editor omezení)
               scoped_styles_variables: 'Můžete použít následující CSS proměnné pro nastavené barvy organizace:'
-              use_markdown_editor: Toto nahradí WYSIWYG editor, místo toho použijte Markdown editor. Text bude vykreslen jako HTML na veřejných stránkách (text v databázi bude uložen jako text markdown)
+              user_timezone: Toto přidá vybrané pole do uživatelského profilu pro nastavení časového pásma. Toto bude použito k zobrazení dat a časů v místním čase uživatele.
               validate_body_max_caps_percent: Nula nedovolí žádné velké písmeno, 100 bude nutit psát vše velkými písmeny
               validate_body_max_marks_together: 'Omezit počet otazníků a vykřičníků, které lze psát dohromada. Např: Pokud je 2, pak ''!!!'' nebude v textu povoleno'
               validate_body_min_length: Toto číslo může být nulové, toto pole bude ve skutečnosti nepovinné
               validate_title_max_caps_percent: Nula nedovolí žádné velké písmeno, 100 bude nutit psát vše velkými písmeny
               validate_title_max_marks_together: 'Omezit počet otazníků a vykřičníků, které lze psát dohromada. Např: Pokud je 2, pak ''!!!'' nebude v textu povoleno'
               validate_title_min_length: Název je vždy povinný a toto číslo nemůže být nulové
+              verifications_html: |
+                Zde můžete vylepšit proces ověřování.<br>
+                <b>POZNÁMKA:</b> Uvědomte si, že změna těchto nastavení může zabránit některým uživatelům v přístupu k platformě. Používejte to s opatrností!<br><br>
+                Také berte na vědomí, že tato nastavení jsou aplikována na všechny uživatele. Administrátoři však budou mít vždy přístup k administraci.
             validators:
               body: Ověření vstupu uživatele pro pole "tělo"
               title: Ověření uživatelem pro pole "Název"
           form_proposal_custom_fields:
+            delete: Smazat
             new: Přidat nové pole "vlastní pole"
             remove: Odstranit toto "vlastní pole"
             sure_to_remove: Opravdu chcete zničit toto pole?
+          form_proposal_private_custom_fields:
+            delete: Smazat
+            new: Přidat nové "soukromé vlastní pole"
+            remove: Odstranit toto "ssoukromé vlastní pole"
+            sure_to_remove: Opravdu chcete zničit toto soukromé pole?
+          form_scoped_admin_styles:
+            delete: Smazat
+            new: Přidat nový "admin panel" CSS box
+            remove: Odstranit tento CSS box
+            sure_to_remove: Opravdu chcete zničit tento CSS box?
           form_scoped_admins:
+            delete: Smazat
             new: Přidání nové skupiny "Škálovaní administrátoři"
             remove: Odstranit tuto skupinu "Škálovaní administrátoři""
             sure_to_remove: Opravdu chcete zničit tuto skupinu "Škálovaní administrátoři"?
           form_scoped_styles:
+            delete: Smazat
             new: Přidat nový CSS box
             remove: Odstranit tento CSS box
             sure_to_remove: Opravdu chcete zničit tento CSS box?
           none: "⛔ Nikdy! - Deaktivujte jiná omezení"
           process_groups: Skupiny procesů
-          rich_text_editor_in_public_views: 'POZNÁMKA: "Kompletní textový editor pro účastníky" je povolen, tato možnost nebude využita. Pro povolení obrázků v Návrzích používejte místo toho hacky editoru.'
           show:
             title: Vylepšení pro %{setting}
             update: Aktualizace konfigurace
           system: Všude kromě participačních prostor
+          title:
+            admins: Škálovaní administrátoři
+            editors: Hack editoru
+            livechat: Živý chat
+            proposal_custom_fields: 'Vlastní pole návrhů: veřejná pole'
+            proposal_private_custom_fields: 'Vlastní pole návrhů: Soukromá pole'
+            proposals: Návrhy hacků
+            scoped_admin_styles: 'Vlastní styly: Panel administrace'
+            scoped_styles: 'Vlastní styly: Veřejné strany'
+            styles: Vlastní styly
+            surveys: Průzkumy a formuláře
+            verifications: Ověřovací / Schvalovací hacky
           update:
             error: Chyba při aktualizaci konfigurace! %{error}
             success: Konfigurace byla úspěšně aktualizována
@@ -328,17 +398,52 @@ cs:
           update:
             error: Chyba aktualizace přesměrování! %{error}
             success: Přesměrování úspěšně aktualizováno
+        maintenance:
+          private_data:
+            component: Prostor / komponenta
+            confirm_delete: Opravdu chcete odstranit všechna soukromá data tohoto zdroje? Tuto akci nelze vrátit zpět.
+            delete: Odstranit vše
+            destroying_private_data: Soukromá data pro %{title} jsou nastavena na zničení. Zkontrolujte prosím znovu za několik minut.
+            done: Hotovo
+            help_html: |
+              Tento nástroj umožňuje odstranit všechna soukromá data pro konkrétní participační prostor nebo komponentu. Tato akce je nevratná a odstraní všechna soukromá data z databáze.
+              <br><br>
+              <strong>Co je považováno za soukromá data?</strong>
+              <br>
+              Soukromá data jsou jakékoliv informace, které nejsou veřejně dostupné a jsou přístupné pouze správcům. To v současné době zahrnuje informace o soukromých vlastních polích.
+              <br><br>
+              <strong>Co se stane, když smažu soukromá data?</strong>
+              <br>
+              Když smažete soukromá data, všechny soukromé informace pro vybraný participační prostor nebo součást budou trvale odstraněny z databáze. Protokol této akce bude uložen v systému pro účely auditu.
+              <br><br>
+              <strong>Co se stane s veřejnými daty?</strong>
+              <br>
+              Veřejná data nebudou touto akcí dotčena. Budou odstraněna pouze soukromá data.
+              <br><br>
+              <strong>Je minimální čas počkat před odstraněním soukromých dat?</strong>
+              <br>
+              Ano, nemůžete smazat soukromá data, pokud byla poslední aktualizace menší než před %{time_ago}. Tuto konfiguraci můžete změnit v souboru inicializátoru.
+            items_count: Dotčené celkem
+            last_date: Poslední aktualizace
+            no_data: Nejsou nalezena žádná soukromá data starší než před %{time_ago}
+            not_destroyable: Tento zdroj zatím nelze zničit
+            removing: Odstraňování...
+            time_ago: "Před %{time}"
         menu:
           admins: Škálovaní administrátoři
-          checks: Systémová kompatibilita
           custom_redirects: Vlastní přesměrování
           editors: Hack editoru
           livechat: Live Chat
+          maintenance:
+            checks: Systémová kompatibilita
+            maintenance: Údržba
+            private_data: Soukromá data
           menu_hacks: Vylepšení menu
           proposal_custom_fields: Vlastní pole pro návrhy
           proposals: Návrhy hacků
           styles: Vlastní styly
           surveys: Průzkumy a formuláře
+          verifications: Ověření
         menu_hacks:
           create:
             error: Chyba při vytváření položky menu! %{error}
@@ -363,10 +468,13 @@ cs:
           index:
             confirm_destroy: Opravdu chcete odstranit toto přizpůsobení?
             edit: Upravit
+            home_content_block_menu:
+              title: Blok Globální menu
+            menu:
+              title: Hlavní menu
             new: Nová položka
             remove: Odstranit přidání
             remove_hack: Odstranit přizpůsobení
-            title: Hlavní menu
           new:
             save: Uložit
             title: Nová položka menu
@@ -374,6 +482,41 @@ cs:
             error: Chyba při aktualizaci položky menu! %{error}
             success: Položka menu byla úspěšne aktualizována
           url_exists: Stejná adresa URL je již nakonfigurována, prosím upravte ji místo jejího vytvoření.
+        officializations:
+          authorizations: Autorizace
+          verification_modal:
+            authorizations_for: Autorizace pro %{user}
+            close: Zavřít
+        proposal_custom_fields:
+          menu:
+            title: Veřejná pole
+          private_body: Tělo soukroméhho pole
+          private_data_last_remove: Tato data byla zničena před %{time_ago}.
+          private_data_last_update: Tato data byla naposledy aktualizována před %{time_ago}.
+          proposal_private_custom_fields: Soukromá pole
+          remove_private_data: "👉 Možná jej chcete odstranit"
+        scoped_admin_styles:
+          menu:
+            title: Panel administrace
+        scoped_styles:
+          menu:
+            title: Veřejný frontend
+      admin_log:
+        component:
+          destroy_private_data: "%{user_name} zničil %{count} položky soukromých dat pro %{resource_name} v %{space_name}"
+        user:
+          admin_creates_authorization: "%{user_name} ověřil %{resource_name} s %{handler_name}"
+          admin_destroys_authorization: "%{user_name} zničil ověření %{handler_name} na %{resource_name}"
+          admin_forces_authorization: "%{user_name} vynutil ověření %{handler_name} na %{resource_name}. Důvod: %{reason}"
+      amendments:
+        modal:
+          amendment_exists: Pozměňovací návrh již existuje
+          current_amendment_html: <p>Můžete <a href="%{amendment_link}">přistupovat k aktuálnímu pozměňovacímu návrhu zde</a>.</p>
+          dismiss: Ok, rozumím
+          explanation_html: |
+            <p>V současné době je pro tento návrh hodnocen další pozměňovací návrh. Chcete-li vytvořit nový, musíte počkat, až bude aktuální přijat nebo odmítnut.</p>
+            <p>Můžete se také ozvat autorovi tohoto návrhu <a href="%{proposal_link}">a zanechat komentář</a> a pokusit se urychlit řešení současného pozměňovacího návrhu.</p>
+        pending_limit_reached: Omlouváme se, ale v jednom okamžiku může být pouze jeden čekající pozměňovací návrh. Počkejte prosím, dokud nebude "%{emendation}" přijat nebo zamítnut.
       config:
         intergram:
           auto_no_response: Zdá se, že právě teď nikdo není k dispozici odpovědět. Řekněte nám, jak vás můžeme kontaktovat, a co nejdříve se k vám vrátíme.
@@ -428,6 +571,27 @@ cs:
           show:
             view_meeting: Zobrazit schůzku
             view_proposal: Zobrazit návrh
+      proposal_private_custom_fields_disclosure: Tyto informace nebudou publikovány
+      required_authorizations:
+        index:
+          cancel: Udělám to za chvíli, %{link}.
+          granted_title: Udělená ověření
+          logout: dovolte mi odhlásit se
+          missing_title: Zatím neověřeno
+          resume_title: Čeká se na ověření
+          resume_with_method: Pokračovat v ověřování pomocí %{name}
+          title: Ověřte svou totožnost
+          verify_with_all_these_options: 'Před přístupem k platformě se prosím ověřte všemi těmito metodami:'
+          verify_with_any_of_these_options: 'Před přístupem k platformě si prosím ověřte alespoň jednu z těchto možností:'
+          verify_with_method: Ověřit pomocí %{name}
+      session:
+        authorization_is_required: Chcete-li se zúčastnit této platformy, musíte svůj účet autorizovat s platnou autorizací (%{authorizations}).
+      system:
+        organizations:
+          admin_allowed_authoritzations_help_html: |
+            Správci budou moci uživatele s těmito oprávněními ručně ověřovat.
+            <br>Používejte tuto funkci opatrně, protože může vést k bezpečnostním problémům.
+          awesome_tweaks: Decidim Awesome Tweaks
       validators:
         too_much_caps: Používá příliš mnoho velkých písmen (více než %{percent}% textu)
       voting:
@@ -435,13 +599,17 @@ cs:
           abstained: "✔️ Zdržel se hlasování"
           change_vote: Změnit můj hlas
           default_box_title: Hlasovat o tomto návrhu
+          default_instructions_html: "<p>Přečtěte si pečlivě pravidla voleb, abyste pochopili, jak bude vaše hlasování použito v %{organization}\"</p>"
           modal:
             cancel: Zrušit
             message: Váš hlas bude považován za konečný v %{date}. Do té doby jej můžete změnit,
+            proceed: Provést
+            skip: Zaškrtněte pro přeskočení tohoto okna v budoucnu
           vote_button: Kliknutím hlasujte
           voted: Odhlasováno
           voting_for: Můj hlas pro "%{proposal}" je "%{type}"
           weights:
+            weight_0: Zdržet se
             weight_0_short: 'A:'
             weight_1: Červená
             weight_1_short: 'R:'
@@ -449,19 +617,30 @@ cs:
             weight_2_short: 'Y:'
             weight_3: Zelená
             weight_3_short: 'G:'
+    meetings:
+      meetings_map:
+        view_meeting: Zobrazit schůzku
     proposals:
+      admin:
+        exports:
+          awesome_private_proposals: Návrhy se soukromými údaji
       proposals:
         orders:
           az: A-Z (abecední)
           supported_first: Nejdříve podporováno
           supported_last: Naposledy podporováno
           za: Z-A (obrácená abeceda)
+        proposal:
+          view_proposal: Zobrazit návrh
   layouts:
     decidim:
-      admin:
-        decidim_awesome:
-          title: Vylepšení Decidim
       decidim_awesome:
+        admin:
+          maintenance:
+            title: 'Nástroj údržby: %{title}'
+            titles:
+              checks: Kontroly kompatibility systému
+              private_data: Vymazání soukromých údajů
         awesome_config:
           amendments: Pozměňovací návrhy
           autosaved_error: Místní úložiště není ve vašem prohlížeči podporováno, formulář nelze uložit automaticky.

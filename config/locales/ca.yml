@@ -2,12 +2,14 @@ ca:
   activemodel:
     attributes:
       config:
-        additional_proposal_sortings: Opcions d'ordenació addicionals actives
-        allow_images_in_full_editor: Permet imatges a l'editor HTML complet
-        allow_images_in_markdown_editor: Permet imatges a l'editor Markdown
+        additional_proposal_sortings: Activar opcions d'ordenació addicionals
+        allow_images_in_editors: Permet imatges a l'editor HTML
         allow_images_in_proposals: Permet imatges a l'editor de propostes
-        allow_images_in_small_editor: Permet imatge a l'editor HTML reduït
+        allow_videos_in_editors: Permet vídeos a l'editor HTML
         auto_save_forms: Desa automàticament els formularis a l'emmagatzematge local
+        force_authorization_after_login: Forçar autorització després d'iniciat sessió/registre
+        force_authorization_help_text: Text d'ajuda per la pàgina d'autorització
+        force_authorization_with_any_method: Permetre l'accés si es concedeix alguna de les autoritzacions (per defecte, totes són necessàries)
         intergram_auto_no_response: Un missatge que s'envia un minut després que la usuària hagi enviat el seu primer missatge i no s'hagi rebut cap resposta
         intergram_auto_response: Un missatge que s'envia immediatament després que la usuària enviï el seu primer missatge
         intergram_chat_id: ID de xat
@@ -18,10 +20,12 @@ ca:
         intergram_title_closed: Títol del xat quan està tancat
         intergram_title_open: Títol del xat quan està obert
         intergram_use_floating_button: Si està marcat, el xat tancat és sempre un botó en lloc d'un text
-        proposal_custom_fields: 'Camps personalitzats #%{id}'
-        scoped_admins: 'Grup d''administradores acotades #%{id}'
-        scoped_styles: 'Personalització d''estils #%{id}'
-        use_markdown_editor: Fes servir l'editor Markdown en comptes de l'editor HTML
+        proposal_custom_fields: Camps personalitzats %{id}
+        proposal_private_custom_fields: Camps personalitzats %{id}
+        scoped_admin_styles: Personalització d'estils %{id}
+        scoped_admins: Grup d'administradores acotades %{id}
+        scoped_styles: Personalització d'estils %{id}
+        user_timezone: Permet als usuaris definir la seva zona horària en el seu perfil
         validate_body_max_caps_percent: Percentatge màxim de majúscules en el cos de la proposta
         validate_body_max_marks_together: Nombre màxim de símbols consecutius permesos al cos de la proposta
         validate_body_min_length: Nombre de caràcters mínims requerits pel cos de la proposta
@@ -47,10 +51,14 @@ ca:
         target: Obre a
         url: URL
         visibility: Visibilitat
-      proposal:
-        proposal_custom_fields: Camps personalitzats
+      organization:
+        awesome_admins_available_authorizations: Permet a les administradores verificar manualment a les participants amb aquests verificadors
+      user:
+        user_time_zone: Zona horària personal
   decidim:
     admin:
+      actions:
+        manage: Configura
       filters:
         admin_accountability:
           admin_role_type:
@@ -77,7 +85,6 @@ ca:
             announcement: Anunci
             iframe: Codi Iframe
             iframe_help: 'Posa el teu codi com a HTML: <iframe width="100%" height="700" frameBorder="0" allowFullscreen src="..."></iframe>. S''eliminarà qualsevol altre element HTML que no sigui l''Iframe. Assegureu-vos de fer servir 100% a l''amplada (width="100%") per tal d''omplir la pantalla.'
-            no_margins: Sense marges entre l'Iframe i la resta de la pàgina
             viewport_width: Limita l'amplada màxima com a la resta de l'aplicació
           step:
             announcement: Anunci
@@ -117,8 +124,9 @@ ca:
             default_sort_order_options:
               az: A-Z (Alfabètic)
               supported_first: Votades per mi primer
-              supported_last: Votades últimes per mi
+              supported_last: Votades per mi últimes
               za: Z-A (ordre alfabètic invers)
+            limit_pending_amendments: Permetre només una esmena pendent a cada proposta.
             sort_orders_enabled: Opcions d'ordenació actives
             voting_cards_box_title: Títol per la cabina de votació
             voting_cards_box_title_help: L'opció per defecte és 'Votar a aquesta proposta'. Utilitzeu '-' per amagar-la.
@@ -133,7 +141,11 @@ ca:
               supported_last: Votades últimes per mi
               za: Z-A (ordre alfabètic invers)
     decidim_awesome:
+      account:
+        timezone_select:
+          time_zone_helper: Fes servir la teva zona horària personal per mostrar les dates d'acord amb la teva localització quan hagis iniciat sessió.
       admin:
+        actions: Accions
         admin_accountability:
           admin_roles:
             admin: Administradora de plataforma
@@ -170,6 +182,26 @@ ca:
             collaborator: Col·laboradora
             moderator: Moderadora
             valuator: Avaluadora
+        admin_authorizations:
+          authorization:
+            confirm_destroy: Estàs segur que vols eliminar aquesta verificació? Aquesta actuació pot afectar a l'accés de la participant en la plataforma.
+            destroy: Eliminar
+            granted_at: Concedit a %{date}
+            metadata: Conté metadades? %{metadata}
+          authorization_destroyed: L'autorització s'ha eliminat correctament.
+          authorization_not_destroyed: La verificació no s'ha pogut eliminar!
+          authorization_transferred: 'Avís: hi ha hagut un conflicte de verificació i la verificació s''ha transferit a %{user}'
+          conflict: Hi ha un conflicte amb una autorització existent
+          conflict_help_html: "Heu de resoldre el conflicte amb la participant %{user} abans de poder autoritzar la participant amb aquesta autorització.\n<br><br>\nEs produeix un conflicte de verificació quan un altre usuari té les mateixes dades que la participant que esteu intentant autoritzar.\nPodeu resoldre aquest conflicte eliminant l'autorització conflictiva de l'altre participant o utilitzant dades diferents per a aquest participant.\n"
+          edit:
+            authorize: Autoritza %{user} amb %{name}
+            do_it_if_sure: Feu-ho només si esteu segur que la participant té aquesta autorització.
+            force_verification: Força la verificació amb les dades actuals
+            force_verification_help: La verificació ha fallat, però podeu forçar-la si esteu segur que la participant té aquesta autorització.
+            force_verification_reason: 'Doneu un motiu per forçar la verificació:'
+            warning: 'Avís: en forçar aquesta autorització, esteu forçant l''estat d''autorització actual del participant.'
+          user_authorized: "%{user} s'ha autoritzat correctament amb %{name}"
+          user_not_authorized: "%{user} no s'ha pogut autoritzar amb %{name}"
         checks:
           index:
             admin_head_tags: Etiquetes Awesome incloses a la capçalera de l'aplicació d'administració
@@ -188,7 +220,6 @@ ca:
               Sembla que aquesta instal·lació requereix migrar <strong>%{total}</strong> imatges al nou sistema.<br>
               Pots iniciar el procés ara i es durà a terme en segon pla.
             start_image_migrations: "\U0001F449 Iniciar el procés de migració ara"
-            title: Anàlisi de compatibilitat amb el sistema
         config:
           caution: 'NOTA: Aquesta funció modifica en gran mesura alguns comportaments predeterminats que podrien provocar resultats inesperats. Utilitzeu-lo amb precaució!'
           constraints:
@@ -226,50 +257,88 @@ ca:
               incorrect_css: 'El CSS de la caixa #%{key} no és vàlid'
               incorrect_json: 'La sintaxi JSON de la caixa #%{key} és invàlida'
             help:
-              allow_images_in_full_editor: Això afegirà un botó per pujar imatges a l'editor HTML complet.
-              allow_images_in_markdown_editor: Això permetrà a l'editor markdown pujar imatges amb "copiar i enganxar" o "arrastrant i deixant anar".
+              allow_images_in_editors: Això afegirà una icona per pujar arxius a l'editor HTML
               allow_images_in_proposals: Això permetrà pujar imatges a l'editor de propostes, disponible per qualsevol usuari
-              allow_images_in_small_editor: Això afegirà un botó per pujar imatges a l'editor HTML mínim.
+              allow_videos_in_editors: Això afegirà una icona per enllaçar vídeos a l'editor HTML
               auto_save_forms: Això farà servir l'emmagatzematge local del navegador per desar automàticament les dades introduïdes pels usuaris a les enquestes i altres formularis mentre les omplen. Les dades es restauraran en una futura visita amb el mateix navegador en cas que no s'enviï el formulari. Si s’envia el formulari, s’eliminaran les dades locals. Si els usuaris eliminen les seves dades del navegador, tampoc es restauraran.
               drag_and_drop_supported: Quan es pugin imatges, es pot fer a través del mètode de "arrossegar i deixar anar". Les imatges seran pujades al servidor i inserides com recursos externs (no es fa servir codificació en línia base64).
+              force_authorization_after_login: 'Si està habilitat, les usuàries seran redireccionades a la pàgina d''autorització després de l''inici de sessió o registre si algunes de les autoritzacions especificades no són concedides. Això és útil si voleu forçar les usuàries a que es verifiquin a través d''una autorització específica abans que puguin iniciar sessió en qualsevol moment (per exemple: per prevenir spam).'
+              force_authorization_help_text: Afegeix un text personalitzat per explicar per què cal l'autorització. Assegureu-vos també d'afegir un mode de contacte en cas que les usuàries necessitin ajuda.
               intergram_about: Intergram utilitza el Telegram Messenger per gestionar un widget de xat en viu de suport incrustat a la part inferior de la pàgina.
               intergram_config: 'Convida a la <a href="https://web.telegram.org/#/im?p=@IntergramBot">@Intergram bot</a> al teu grup o comença un xat amb ella directament. <a href="https://github.com/idoco/intergram#embed-intergram-in-your-website-with-these-2-simple-steps">+ info</a>'
               original_editor_override: Desde la versió 0.26, és possible (per administradors només) pujar imatges als editors de text enriquit. Per tant, les opcions d'imatges disponibles en aquesta pàgina només afecten a la part pública de la web (les administradores sempre ho tenen activat).
               proposal_custom_fields: Crea camps personalitzats per a propostes que només s'apliquin a determinades parts de la web pública (per fer-ho, utilitza l'editor de restriccions)
               proposal_custom_fields_example: Les dades son desades en un objecte XML fent servir atributs compatibles amb HTML (elements DL, DT, DD) que reemplacen el "cos" de la proposat normal.
               proposal_custom_fields_translations: "Les etiquetes, el text d'ajuda, els \"placeholders\" i els valors predeterminats poden utilitzar les traduccions personalitzades de l'aplicació.\nPer això, en comptes d'utilitzar un text literal, utilitzeu la clau i18n (ha de contenir almenys un punt).\nPer exemple:\n- \"activemodel.attributes.proposal.title\" en lloc de \"Títol\"\n- \"activemodel.attributes.proposal.address\" en lloc de \"Address\"\nO utilitzeu les vostres pròpies claus en combinació amb altres eines per definir traduccions (p. ex.: utilitzant el mòdul Term Customizer):\n - \"myapp.custom_fields.bio\" en lloc de \"Biografia\""
+              proposal_private_custom_fields: Similar als camps públics, però aquesta informació no es revelarà públicament (només hi tindran accés els administradors).
+              proposal_private_custom_fields_translations: |
+                Els camps personalitzats privats es mostren en un quadre diferent amb aquest text d'informació:
+                %{warning}
+                Aquest text es pot personalitzar amb una traducció personalitzada utilitzant la clau:
+                %{key}
+              scoped_admin_styles: Tingues en compte que amagar contingut aquí pot deixar l'administrador inservible. Si us plau, actueu amb cautela.
+              scoped_admin_styles_variables: 'Pots fer servir les següents variables CSS pels colors personalitzats de l''organització:'
+              scoped_admin_styles_warning: "<strong>Atenció</strong>: Aquí podeu afegir CSS que s'aplica només en aquest administrador."
               scoped_admins: Promou usuaries normals a administradores amb accés limitat a certes parts de la web pública (feu servir l'editor de restriccions per això). Noteu que afegir usuaries que ja tenen permisos d'administració no té cap efecte.
               scoped_styles: Crea CSS personalitzats que només s'apliquin a determinades parts de la web pública (per fer-ho, utilitza l'editor de restriccions)
               scoped_styles_variables: 'Pots fer servir les següents variables CSS pels colors personalitzats de l''organització:'
-              use_markdown_editor: Això substituirà l'editor HTML (Quill), en el seu lloc s'utilitzarà un editor Markdown tant a l'admin com a la pàgina pública per processar el text (a la base de dades el text es desarà com a markdown)
+              user_timezone: Això afegirà un selector al perfil d'usuari per permetre establir la zona horària. Això farà que l'usuari vegi les dates i hores segons la seva configuració local.
               validate_body_max_caps_percent: Zero no permetrà cap majúscula, 100 obligarà a escriure-ho tot en majúscules
               validate_body_max_marks_together: 'Limiteu el nombre de signes d''interrogació i d''exclamació que es poden escriure junts. És a dir: si és 2, aleshores ''!!!'' no es permetrà al text'
               validate_body_min_length: Aquest nombre pot ser zero, això farà que aquest camp no sigui obligatori
               validate_title_max_caps_percent: Zero no permetrà cap majúscula, 100 obligarà a escriure-ho tot en majúscules
               validate_title_max_marks_together: 'Limiteu el nombre de signes d''interrogació i d''exclamació que es poden escriure junts. És a dir: si és 2, aleshores ''!!!'' no es permetrà al text'
               validate_title_min_length: El títol sempre és obligatori i aquest número no pot ser zero
+              verifications_html: |
+                Aquí pots fer alguns ajustaments en el procés de verificació.<br>
+                <b>NOTA:</b> Tingues en compte que canviar aquests paràmetres pot impedir que algunes usuàries accedeixin a la plataforma. Fes-ho servir amb precaució!<br><br>
+                Tingues en compte també, que aquests paràmetres s'apliquen a totes les usuàries. Les administradores sempre tindran accés al tauler dadministració.
             validators:
               body: Validacions d'entrada per l'usuari en el camp cos de la proposta
               title: Validacions d'entrada per l'usuari en el camp títol de la proposta
           form_proposal_custom_fields:
+            delete: Esborra
             new: Afegeix una nova caixa de "camps personalitzats"
             remove: Elimina aquesta caixa de "camps personalitzats"
             sure_to_remove: Estàs segura que vols eliminar aquesta caixa de camps personalitzats?
+          form_proposal_private_custom_fields:
+            delete: Esborra
+            new: Afegiu una nova caixa de "camps personalitzats privats"
+            remove: Elimina aquesta caixa de "camps personalitzats"
+            sure_to_remove: Segur que vols eliminar aquesta caixa de camps personalitzats?
+          form_scoped_admin_styles:
+            delete: Esborra
+            new: Afegeix una nova caixa CSS
+            remove: Elimina aquesta caixa CSS
+            sure_to_remove: Segur que vols eliminar aquesta caixa de camps personalitzats?
           form_scoped_admins:
+            delete: Esborra
             new: Afegir un nou grup "d'Administradores acotades"
             remove: Elimineu aquest grup "d'Administradores acotades"
             sure_to_remove: Estàs segura que vols eliminar aquest grup "d'Administradores acotades"?
           form_scoped_styles:
+            delete: Esborra
             new: Afegeix una nova caixa CSS
             remove: Elimina aquesta caixa CSS
             sure_to_remove: Estàs segura que vols eliminar aquesta caixa CSS?
           none: "⛔ Mai! - Desactiva qualsevol altra restricció"
           process_groups: Grup de processos
-          rich_text_editor_in_public_views: 'NOTA: "Editor de text enriquit per participants" està habilitat a la configuració general, aquesta opció no aplicarà. Feu servir les modificacions d''editor general per afegir imatges a les propostes.'
           show:
             title: Modificacions per %{setting}
             update: Actualitza la configuració
           system: A tot arreu excepte espais participatius
+          title:
+            admins: Administradores acotades
+            editors: Modificacions als editors
+            livechat: Xat en directe
+            proposal_custom_fields: 'Camps personalitzats per propostes: Camps públics'
+            proposal_private_custom_fields: 'Camps personalitzats per propostes: Camps privats'
+            proposals: Modificacions a propostes
+            scoped_admin_styles: 'Estils personalitzats: Panell d''administració'
+            scoped_styles: 'Estils personalitzats: Interfície pública'
+            styles: Estils personalitzats
+            surveys: Formularis i enquestes
+            verifications: Verificacions / Hacks d'autorització
           update:
             error: Error actualitzant la configuració! %{error}
             success: Configuració actualitzada correctament
@@ -329,17 +398,52 @@ ca:
           update:
             error: 'Error en actualitzar la redirecció: %{error}'
             success: Redirecció actualitzada correctament
+        maintenance:
+          private_data:
+            component: Espai / Component
+            confirm_delete: Segur que voleu suprimir totes les dades privades d'aquest recurs? Aquesta acció no es pot desfer.
+            delete: Esborrar-ho tot
+            destroying_private_data: Les dades privades de %{title} s'han programat per ser destruïdes. Si us plau, torneu a comprovar d'aquí a uns minuts.
+            done: Fet
+            help_html: |
+              Aquesta eina permet esborrar totes les dades privades d'un espai o component participatiu concret. Aquesta acció és irreversible i eliminarà totes les dades privades de la base de dades.
+              <br><br>
+              <strong>Què es consideren dades privades?</strong>
+              <br>
+              Les dades privades són qualsevol informació que no està disponible públicament i només és accessible per als administradors. Això, de moment, inclou la informació del camps personalitzats privats.
+              <br><br>
+              <strong>Què passa quan suprimeixo dades privades?</strong>
+              <br>
+              Quan suprimiu les dades privades, tota la informació privada de l'espai o component participatiu seleccionat s'eliminarà permanentment de la base de dades. Un registre d'aquesta acció s'emmagatzemarà al sistema amb finalitats d'auditoria (pero no les dades en si).
+              <br><br>
+              <strong>Què passa amb les dades públiques?</strong>
+              <br>
+              Les dades públiques no es veuran afectades per aquesta acció. Només s'eliminaran les dades privades.
+              <br><br>
+              <strong>Hi ha un temps mínim d'espera abans de suprimir les dades privades?</strong>
+              <br>
+              Sí, no podeu suprimir dades privades si l'última actualització va ser fa menys de %{time_ago}. Podeu canviar aquesta configuració al fitxer inicialitzador.
+            items_count: Total afectats
+            last_date: Última actualització
+            no_data: No s'han trobat dades privades més antigues que fa %{time_ago}
+            not_destroyable: Aquest recurs encara no es pot destruir
+            removing: Eliminant...
+            time_ago: "fa %{time}"
         menu:
           admins: Administradores acotades
-          checks: Compatibilitat de sistema
           custom_redirects: Redireccions personalitzades
           editors: Modificacions als editors
           livechat: Xat en directe
+          maintenance:
+            checks: Compatibilitat de sistema
+            maintenance: Manteniment
+            private_data: Dades privades
           menu_hacks: Retocs al menú
           proposal_custom_fields: Camps personalitzats per propostes
           proposals: Modificacions a propostes
           styles: Estils personalitzats
           surveys: Formularis i enquestes
+          verifications: Verificacions
         menu_hacks:
           create:
             error: 'Error en crear un nou ítem de menú: %{error}'
@@ -364,10 +468,13 @@ ca:
           index:
             confirm_destroy: Confirmes que vols eliminar aquest retoc?
             edit: Editar
+            home_content_block_menu:
+              title: Bloc de menú global a la home
+            menu:
+              title: Menú principal
             new: Nou ítem
             remove: Eliminar addició
             remove_hack: Eliminar retoc
-            title: Menú principal
           new:
             save: Desar
             title: Nou ítem de menú
@@ -375,6 +482,41 @@ ca:
             error: 'Error en actualitzar l''ítem de menú: %{error}'
             success: Ítem de menú actualitzat correctament
           url_exists: Aquesta URL ha estat configurada en un altre ítem de menú, si us plau edita'l en comptes de crear-ne un de nou.
+        officializations:
+          authorizations: Autoritzacions
+          verification_modal:
+            authorizations_for: Autoritzacions per a %{user}
+            close: Tanca
+        proposal_custom_fields:
+          menu:
+            title: Camps públics
+          private_body: Cos privat
+          private_data_last_remove: Aquestes dades es van destruir fa %{time_ago}.
+          private_data_last_update: Aquestes dades es van actualitzar per última vegada fa %{time_ago}.
+          proposal_private_custom_fields: Camps privats
+          remove_private_data: "👉 És possible que vulgueu eliminar-lo"
+        scoped_admin_styles:
+          menu:
+            title: Panell admin
+        scoped_styles:
+          menu:
+            title: Interfície pública
+      admin_log:
+        component:
+          destroy_private_data: "%{user_name} ha destruït %{count} elements de dades privades per a %{resource_name} a %{space_name}"
+        user:
+          admin_creates_authorization: "%{user_name} s'ha verificat %{resource_name} amb %{handler_name}"
+          admin_destroys_authorization: "%{user_name} ha destruït la verificació %{handler_name} a %{resource_name}"
+          admin_forces_authorization: "%{user_name} ha forçat la verificació %{handler_name} a %{resource_name}. Motiu: %{reason}"
+      amendments:
+        modal:
+          amendment_exists: Una esmena ja existeix
+          current_amendment_html: <p>Podeu <a href="%{amendment_link}">accedir a l'esmena actual aquí</a>.</p>
+          dismiss: D'acord
+          explanation_html: |
+            <p>Actualment, s'està avaluant una altra esmena per a aquesta proposta. Per crear-ne una de nova, heu d'esperar fins que l'actual sigui acceptada o rebutjada.</p>
+            <p>També podeu posar-vos en contacte amb l'autor d'aquesta proposta <a href="%{proposal_link}">deixant un comentari</a> i intentar accelerar la resolució de l'esmena actual.</p>
+        pending_limit_reached: Ho sentim, només hi pot haver una esmena pendent alhora. Si us plau, espereu fins que "%{emendation}" sigui acceptat o rebutjat.
       config:
         intergram:
           auto_no_response: Sembla que no hi ha ningú disponible per a respondre en aquest moment. Si us plau, indica'ns com et podem contactar i ens comunicarem amb tu tan aviat com ens sigui possible.
@@ -429,6 +571,27 @@ ca:
           show:
             view_meeting: Veure trobada
             view_proposal: Veure proposta
+      proposal_private_custom_fields_disclosure: Aquesta informació no es publicarà
+      required_authorizations:
+        index:
+          cancel: Això ho faré en un altre moment, %{link}.
+          granted_title: Verificacions concedides
+          logout: deixa'm tancar la sessió
+          missing_title: No verificada encara
+          resume_title: Verificacions pendents
+          resume_with_method: Reprendre la verificació amb %{name}
+          title: Verifica la teva identitat
+          verify_with_all_these_options: 'Si us plau, verifica''t amb tots aquests mètodes abans de poder accedir a la plataforma:'
+          verify_with_any_of_these_options: 'Si us plau, verifica''t com a mínim amb un d''aquests mètodes abans de poder accedir a la plataforma:'
+          verify_with_method: Verificar amb %{name}
+      session:
+        authorization_is_required: Per participar en aquesta plataforma, cal que autoritzeu el vostre compte amb una autorització vàlida (%{authorizations}).
+      system:
+        organizations:
+          admin_allowed_authoritzations_help_html: |
+            Les administradores podran verificar manualment els participants amb aquests verificadors.
+            <br>Utilitzeu aquesta funció amb precaució, ja que pot provocar problemes de seguretat.
+          awesome_tweaks: Configuracions del Decidim Awesome
       validators:
         too_much_caps: Fa servir massa lletres majúscules (més %{percent}% del text)
       voting:
@@ -436,7 +599,7 @@ ca:
           abstained: "✔ Abstenció"
           change_vote: Canvia el meu vot
           default_box_title: Vota en aquesta proposta
-          default_instructions_html: <p>Llegeix les normes de la votació amb atenció per entendre com s'utilitzarà el teu vot per %{organization}"</p>
+          default_instructions_html: "<p>Llegeix les normes de la votació amb atenció per entendre com s'utilitzarà el teu vot per %{organization}\"</p>"
           modal:
             cancel: Cancel·la
             message: El teu vot es considerarà definitiu el %{date}. Pots canviar-lo fins a aquest moment
@@ -454,19 +617,30 @@ ca:
             weight_2_short: 'G:'
             weight_3: Verd
             weight_3_short: 'V:'
+    meetings:
+      meetings_map:
+        view_meeting: Veure trobada
     proposals:
+      admin:
+        exports:
+          awesome_private_proposals: Propostes amb dades privades
       proposals:
         orders:
           az: A-Z (Alfabètic)
           supported_first: Votades per mi primer
           supported_last: Votades últimes per mi
           za: Z-A (ordre alfabètic invers)
+        proposal:
+          view_proposal: Veure proposta
   layouts:
     decidim:
-      admin:
-        decidim_awesome:
-          title: Modificacions a Decidim
       decidim_awesome:
+        admin:
+          maintenance:
+            title: 'Eines de manteniment: %{title}'
+            titles:
+              checks: Anàlisi de compatibilitat amb el sistema
+              private_data: Neteja de dades privades
         awesome_config:
           amendments: Esmenes
           autosaved_error: L'emmagatzematge local no està disponible al teu navegador, el formulari no es podrà desar automàticament.

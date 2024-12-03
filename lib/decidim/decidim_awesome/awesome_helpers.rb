@@ -24,11 +24,11 @@ module Decidim
       end
 
       def javascript_config_vars
-        awesome_config.except(:scoped_styles, :proposal_custom_fields, :scoped_admins).to_json.html_safe
+        awesome_config.slice(:allow_images_in_proposals, :allow_images_in_editors, :allow_videos_in_editors, :auto_save_forms).to_json.html_safe
       end
 
       def show_public_intergram?
-        return unless awesome_config[:intergram_for_public]
+        return false unless awesome_config[:intergram_for_public]
         return true unless awesome_config[:intergram_for_public_settings][:require_login]
 
         user_signed_in?
@@ -47,8 +47,13 @@ module Decidim
       end
 
       # Collects all CSS that is applied in the current URL context
-      def awesome_custom_styles
-        @awesome_custom_styles ||= awesome_config_instance.collect_sub_configs_values("scoped_style")
+      def awesome_scoped_styles
+        @awesome_scoped_styles ||= awesome_config_instance.collect_sub_configs_values("scoped_style")
+      end
+
+      # Collects all CSS that is applied in the current URL context
+      def awesome_scoped_admin_styles
+        @awesome_scoped_admin_styles ||= awesome_config_instance.collect_sub_configs_values("scoped_admin_style")
       end
 
       # Collects all proposal custom fields that is applied in the current URL context
@@ -61,11 +66,22 @@ module Decidim
         @awesome_proposal_custom_fields ||= awesome_config_instance.collect_sub_configs_values("proposal_custom_field")
       end
 
+      def awesome_proposal_private_custom_fields
+        @awesome_proposal_private_custom_fields ||= awesome_config_instance.collect_sub_configs_values("proposal_private_custom_field")
+      end
+
       # this will check if the current component has been configured to use a custom voting manifest
       def awesome_voting_manifest_for(component)
         return nil unless component.settings.respond_to? :awesome_voting_manifest
 
         DecidimAwesome.voting_registry.find(component.settings.awesome_voting_manifest)
+      end
+
+      # Retrives all the "admins_available_authorizations" for the user along with other possible authorizations
+      # returns an instance of Decidim::DecidimAwesome::Authorizator
+      def awesome_authorizations_for(user)
+        @awesome_authorizations_for ||= {}
+        @awesome_authorizations_for[user.id] ||= Authorizator.new(user, awesome_config[:admins_available_authorizations])
       end
 
       def version_prefix

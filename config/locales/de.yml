@@ -3,10 +3,9 @@ de:
     attributes:
       config:
         additional_proposal_sortings: Zusätzliche Sortieroptionen aktiviert
-        allow_images_in_full_editor: Bilder im vollständigen HTML-Editor erlauben
-        allow_images_in_markdown_editor: Bilder im Markdown-Editor erlauben
+        allow_images_in_editors: Bilder im HTML-Editor erlauben
         allow_images_in_proposals: Bilder im Vorschlags-Editor erlauben
-        allow_images_in_small_editor: Bilder im minimalen HTML-Editor erlauben
+        allow_videos_in_editors: Videos im HTML-Editor erlauben
         auto_save_forms: Formulare automatisch lokal speichern
         intergram_auto_no_response: Diese Nachricht wird verschickt, sobald eine Minute seit der letzten vom Benutzer verfasste Nachricht verschickt wurde und keine Antwort eingetroffen ist
         intergram_auto_response: Eine Nachricht, die unmittelbar nach dem Senden der ersten Nachricht des Benutzers gesendet wird
@@ -19,9 +18,10 @@ de:
         intergram_title_open: Geöffneter Chattitel
         intergram_use_floating_button: Wenn aktiviert, ist der geschlossene Chat immer ein Button statt eines Textes
         proposal_custom_fields: 'Eingabefeld #%{id}'
+        proposal_private_custom_fields: 'Privates Eingabefeld #%{id}'
         scoped_admins: Eingeschränkte Admin-Gruppe %{id}
         scoped_styles: Eigene Eingabefelder %{id}
-        use_markdown_editor: Markdown Editor anstelle des HTML-Editors verwenden
+        user_timezone: Erlauben Sie Benutzern, ihre Zeitzone in ihrem Profil einzustellen
         validate_body_max_caps_percent: Maximal erlaubter Prozentsatz an Großbuchstaben für den Textkörper
         validate_body_max_marks_together: Maximal erlaubte aufeinanderfolgende Zeichen im Textkörper
         validate_body_min_length: Minimale zwingend erforderliche Anzahl Zeichen im Textkörper
@@ -47,10 +47,12 @@ de:
         target: Öffnet in
         url: URL
         visibility: Sichtbarkeit
-      proposal:
-        proposal_custom_fields: Eingabefelder
+      user:
+        user_time_zone: Eigene Zeitzone
   decidim:
     admin:
+      actions:
+        manage: Verwalten
       filters:
         admin_accountability:
           admin_role_type:
@@ -77,7 +79,6 @@ de:
             announcement: Ankündigung
             iframe: iFrame-Code
             iframe_help: 'Geben Sie Ihren Code als html: <iframe width="100%" height="700" frameBorder="0" allowFullscreen src="..."></iframe> ein. Andere HTML-Tags werden vom Inhalt entfernt. Stellen Sie sicher, dass Sie 100% als Breite/width verwenden, um gesamten Platz zu füllen.'
-            no_margins: Keine Ränder zwischen iFrame und der restlichen Seite
             viewport_width: Maximale Breite auf den App-Viewport beschränken
           step:
             announcement: Ankündigung
@@ -119,6 +120,7 @@ de:
               supported_first: Zuerst unterstützt
               supported_last: Zuletzt unterstützt
               za: Z-A (umgekehrt alphabetisch)
+            limit_pending_amendments: Erlaube nur eine ausstehende Änderung zu jedem Vorschlag.
             sort_orders_enabled: Aktivierte Sortierarten
             voting_cards_box_title: Titel für das Abstimmungsfeld
             voting_cards_box_title_help: Standardmässig "Für diesen Vorschlag abstimmen". Verwenden Sie "-", um den Text auszublenden.
@@ -133,7 +135,11 @@ de:
               supported_last: Zuletzt unterstützt
               za: Z-A (umgekehrt alphabetisch)
     decidim_awesome:
+      account:
+        timezone_select:
+          time_zone_helper: Verwenden Sie Ihre eigene Zeitzone, um die Daten in Ihrer Ortszeit anzuzeigen, wenn Sie angemeldet sind.
       admin:
+        actions: Aktionen
         admin_accountability:
           admin_roles:
             admin: Superadministrator
@@ -188,7 +194,6 @@ de:
               Es sieht so aus, dass diese Instanz <strong>%{total}</strong> der alten Images auf das neue System migrieren muss.<br>
               Sie können den Prozess jetzt starten und er wird im Hintergrund ausgeführt.
             start_image_migrations: "\U0001F449 Starten Sie den Migrationsprozess jetzt"
-            title: Systemkompatibilität
         config:
           caution: 'HINWEIS: Mit dieser Funktion werden einige Standardverhaltensweisen stark verändert, was zu unerwarteten Ergebnissen führen kann. Verwenden Sie sie mit Vorsicht!'
           constraints:
@@ -226,10 +231,9 @@ de:
               incorrect_css: 'CSS in Box #%{key} ist ungültig'
               incorrect_json: 'JSON-Definition in Box #%{key} ist ungültig'
             help:
-              allow_images_in_full_editor: Bilder im vollen Editor erlauben
-              allow_images_in_markdown_editor: Bilder im Markdown Editor erlauben
+              allow_images_in_editors: Dies fügt ein Bild-Upload-Symbol in allen WYSIWYG-Editoren hinzu
               allow_images_in_proposals: Bilder in Vorschlägen erlauben
-              allow_images_in_small_editor: Bilder in kleinem Editor erlauben
+              allow_videos_in_editors: Dies fügt ein Video-Upload-Symbol in allen WYSIWYG-Editoren hinzu
               auto_save_forms: Formulare automatisch speichern
               drag_and_drop_supported: Drag and Drop unterstützen
               intergram_about: Über Intergram
@@ -238,10 +242,16 @@ de:
               proposal_custom_fields: Erstelle eigene Eingabefelder für das Vorschlagsmodul. Du kannst die Funktion auf einzelne Prozesse / Module beschränken.
               proposal_custom_fields_example: Die Daten werden in einem XML-Objekt unter Verwendung kompatibler HTML-Attribute (dl,dt,dd-Elemente) gespeichert, die den "body" in einem normalen Vorschlag ersetzen.
               proposal_custom_fields_translations: "Labels, Hilfetexte, Platzhalter und Standardwerte können benutzerdefinierte Übersetzungen Ihrer Instanz verwenden. \nVerwenden Sie dafür statt eines String-Literals den i18n-Schlüssel (er muss mindestens einen Punkt enthalten).\nZum Beispiel:\n- \"activemodel.attributes.proposal.title\" statt \"Titel\"\n- \"activemodel.attributes.proposal.address\" anstelle von \"Adresse\"\nOder verwenden Sie Ihre eigenen Schlüssel in Kombination mit anderen Tools um Übersetzungen zu definieren (z. B.: mit dem Modul Term Customizer):\n - \"myapp.custom_fields.bio\" statt \"Biographie\""
+              proposal_private_custom_fields: Wie öffentlich sichtbare Eingabefelder, jedoch werden diese Informationen nicht veröffentlicht (nur Adminzugriff).
+              proposal_private_custom_fields_translations: |
+                Private Eingabefelder werden in einer hervorgehobenen Box mit diesem Informationstext angezeigt:
+                %{warning}
+                Dieser Text kann mit einer benutzerdefinierten Übersetzung durch Verwendung des Schlüssels angepasst werden:
+                %{key}
               scoped_admins: Befördern Sie normale Benutzer zu Administratoren, die nur bestimmte Teile der öffentlichen Seite verwalten können (verwenden Sie dazu den Editor für Einschränkungen). Beachten Sie, dass Benutzer, die bereits reguläre Administratorrechte haben, ignoriert werden. For instance, if having configured /my-origin => /my-destination, a request to /my-origin?locale=ca  will be redirected to "/my-destination?locale=ca".
               scoped_styles: Erstellen Sie benutzerdefinierte CSS, die nur in bestimmten Bereichen der öffentlichen Seite gelten (vewenden Sie dazu die Einschränkungen)
               scoped_styles_variables: 'Sie können die folgenden CSS-Variablen für die benutzerdefinierter Farben der Organisation verwenden:'
-              use_markdown_editor: Markdown Editor benutzen
+              user_timezone: Dadurch wird ein Auswahlfeld im Benutzerprofil hinzugefügt, um die Zeitzone festzulegen. Dies wird verwendet, um Datums- und Zeitangaben in der Ortszeit des Benutzers anzuzeigen.
               validate_body_max_caps_percent: 0 lässt keinen Großbuchstaben zu, 100 lässt ausschliesslich Großbuchstaben zu
               validate_body_max_marks_together: 'Begrenzt die Anzahl der Frage- und Ausrufezeichen, die zusammen geschrieben werden können. Zum Beispiel: Der Wert 2 führt dazu, dass ''!!!'' im Text nicht erlaubt ist'
               validate_body_min_length: Diese Zahl kann Null sein, was das Feld dann effektiv als "nicht obligatorisch" setzt
@@ -252,24 +262,40 @@ de:
               body: Eingabevalidierungen für das Feld "Textkörper"
               title: Eingabevalidierungen für das Feld "Titel"
           form_proposal_custom_fields:
+            delete: Löschen
             new: Neues Eingabefeld
             remove: Eingabefeld entfernen
             sure_to_remove: Bist du sicher, dass du dieses Eingabefeld entfernen möchtest?
+          form_proposal_private_custom_fields:
+            delete: Löschen
+            new: Neues privates Eingabefeld hinzufügen
+            remove: Privates Eingabefeld entfernen
+            sure_to_remove: Bist du sicher, dass du dieses private Eingabefeld entfernen möchtest?
           form_scoped_admins:
+            delete: Löschen
             new: Hinzufügen einer neuen "Eingeschränkte Admins"-Gruppe
             remove: Diese Gruppe "Eingeschränkte Admins" entfernen
             sure_to_remove: Sind Sie sicher, dass Sie diese Gruppe eingeschränkter Admins löschen möchten?
           form_scoped_styles:
+            delete: Löschen
             new: Neue CSS Box hinzufügen
             remove: CSS Box entfernen
             sure_to_remove: Sind Sie sicher, dass Sie diese CSS-Box entfernen möchten?
           none: "⛔ Niemals! - Deaktivieren Sie jede andere Einschränkung"
           process_groups: Prozessgruppen
-          rich_text_editor_in_public_views: 'Warnung: "Erweiterter Text Editor für Teilnehmer" ist aktiviert, diese Option ist inaktiv. Bitte benutzen Sie die Editor Hacks, um Bilder in Vorschlägen zu aktivieren.'
           show:
             title: Decidim Awesome
             update: Aktualisieren
           system: Überall ausser...
+          title:
+            admins: Eingeschränkte Admins
+            editors: Editoren
+            livechat: Live-Chat
+            proposal_custom_fields: 'Benutzerdefinierte Felder: Öffentliche Felder'
+            proposal_private_custom_fields: 'Benutzerdefinierte Felder: Private Felder'
+            proposals: Vorschläge
+            styles: Eigene Styles
+            surveys: Umfragen
           update:
             error: Fehler beim Aktualisieren der Konfiguration! %{error}
             success: Konfiguration erfolgreich aktualisiert
@@ -325,12 +351,45 @@ de:
           update:
             error: Fehler beim Aktualisieren der Umleitung! %{error}
             success: Umleitung erfolgreich aktualisiert
+        maintenance:
+          private_data:
+            component: Bereich / Komponente
+            confirm_delete: Sind Sie sicher, dass Sie alle privaten Daten für diese Ressource löschen möchten? Dies kann nicht rückgängig gemacht werden.
+            delete: Alle löschen
+            destroying_private_data: Die privaten Daten für %{title} werden gelöscht. Bitte versuchen Sie es in ein paar Minuten noch einmal.
+            done: Erledigt
+            help_html: |
+              Mit diesem Tool können Sie alle privaten Daten für einen bestimmten Beteiligungsbereich oder eine bestimmte Komponente löschen. Dieser Vorgang ist irreversibel und entfernt alle privaten Daten aus der Datenbank.
+              <br><br>
+              <strong> Was sind private Daten?</strong>
+              <br>
+              Private Daten sind alle Informationen, die nicht öffentlich verfügbar sind und nur für Administratoren zugänglich sind. Dazu gehören derzeit auch Informationen aus privaten benutzerdefinierten Feldern.
+              <br><br>
+              <strong>Was passiert, wenn ich private Daten lösche?</strong>
+              <br>
+              Wenn Sie private Daten löschen, werden alle privaten Informationen für den ausgewählten Mitwirkungsbereich oder die ausgewählte Komponente dauerhaft aus der Datenbank entfernt. Zu Prüfzwecken wird ein Protokoll dieser Aktion im System gespeichert.
+              <br><br>
+              <strong>Was geschieht mit öffentlichen Daten?</strong>
+              <br> Öffentliche Daten sind von dieser Aktion nicht betroffen. Es werden nur private Daten gelöscht.
+               <br><br>
+              <strong>Gibt es eine Mindestwartezeit vor dem Löschen privater Daten?</strong>
+              <br>
+              Ja, Sie können keine privaten Daten löschen, wenn die letzte Aktualisierung weniger als %{time_ago} zurückliegt. Sie können diese Konfiguration in der Initialisierungsdatei ändern.
+            items_count: Betroffene Gesamtmenge
+            last_date: Letzte Aktualisierung
+            no_data: Es wurden keine privaten Daten gefunden, die älter sind als %{time_ago}
+            not_destroyable: Diese Ressource kann nicht gelöscht werden
+            removing: Entfernen...
+            time_ago: "vor %{time}"
         menu:
           admins: Eingeschränkte Admins
-          checks: Checks
           custom_redirects: Benutzerdefinierte Umleitungen
           editors: Editoren
           livechat: Live-Chat
+          maintenance:
+            checks: Checks
+            maintenance: Wartung
+            private_data: Persönliche Daten
           menu_hacks: Menüanpassungen
           proposal_custom_fields: 'Vorschläge: Eigene Eingabefelder'
           proposals: Vorschläge
@@ -360,10 +419,13 @@ de:
           index:
             confirm_destroy: Sind Sie sicher, dass Sie diese Anpassung entfernen wollen?
             edit: Bearbeiten
+            home_content_block_menu:
+              title: Startseiten-Abschnitt für globales Menü
+            menu:
+              title: Hauptmenü
             new: Neuer Menüpunkt
             remove: Zusatz entfernen
             remove_hack: Anpassungen entfernen
-            title: Hauptmenü
           new:
             save: Sichern
             title: Neuer Menüpunkt
@@ -371,6 +433,26 @@ de:
             error: Fehler beim Aktualisieren des Menüpunkts! %{error}
             success: Menüpunkt erfolgreich aktualisiert
           url_exists: Die gleiche URL ist bereits konfiguriert. bitte bearbeiten Sie diese, anstatt sie neu zu erstellen.
+        proposal_custom_fields:
+          menu:
+            title: Öffentlich sichtbare Felder
+          private_body: Privater Textkörper
+          private_data_last_remove: Diese Daten wurden vor %{time_ago} gelöscht.
+          private_data_last_update: Diese Daten wurden vor %{time_ago} gelöscht.
+          proposal_private_custom_fields: Private Felder
+          remove_private_data: "👉 Sie können es entfernen"
+      admin_log:
+        component:
+          destroy_private_data: "%{user_name} hat %{count} private Daten für %{resource_name} in %{space_name} gelöscht"
+      amendments:
+        modal:
+          amendment_exists: Eine Änderung existiert bereits
+          current_amendment_html: <p>Sie können <a href="%{amendment_link}"> hier auf die aktuelle Änderung</a>zugreifen.</p>
+          dismiss: Ok, verstanden
+          explanation_html: |
+            <p>Derzeit wird eine weitere Änderung für diesen Vorschlag bewertet. Um eine neue zu erstellen, müssen Sie warten, bis die aktuelle akzeptiert oder abgelehnt wird.</p>
+            <p>Sie können auch den Autor dieses Vorschlags durch <a href="%{proposal_link}">erreichen und einen Kommentar</a> hinterlassen und versuchen, die Lösung des aktuellen Änderungsantrags zu beschleunigen.</p>
+        pending_limit_reached: Leider kann es immer nur eine ausstehende Änderung geben. Bitte warten Sie, bis "%{emendation}" akzeptiert oder abgelehnt wird.
       config:
         intergram:
           auto_no_response: Es scheint, dass im Moment niemand verfügbar ist. Bitte sagen Sie uns, wie wir Sie erreichen können und wir melden uns baldmöglichst bei Ihnen.
@@ -417,6 +499,7 @@ de:
           show:
             view_meeting: Sitzung ansehen
             view_proposal: Vorschlag ansehen
+      proposal_private_custom_fields_disclosure: Diese Informationen werden nicht veröffentlicht
       validators:
         too_much_caps: Es werden zu viele Großbuchstaben verwendet (über %{percent}% des Textes)
       voting:
@@ -424,7 +507,7 @@ de:
           abstained: "✔ Enthalten"
           change_vote: Meine Stimme ändern
           default_box_title: Über diesen Vorschlag abstimmen
-          default_instructions_html: <p>Bitte lesen Sie die Wahlregeln sorgfältig durch, um zu verstehen, wie Ihre Stimme von %{organization}" verwendet wird</p>
+          default_instructions_html: "<p>Bitte lesen Sie die Wahlregeln sorgfältig durch, um zu verstehen, wie Ihre Stimme von %{organization}\" verwendet wird</p>"
           modal:
             cancel: Abbrechen
             message: Ihre Stimme wird am %{date} als endgültig betrachtet. Sie können sie bis dahin ändern
@@ -442,19 +525,30 @@ de:
             weight_2_short: 'Y:'
             weight_3: Grün
             weight_3_short: 'G:'
+    meetings:
+      meetings_map:
+        view_meeting: Sitzung ansehen
     proposals:
+      admin:
+        exports:
+          awesome_private_proposals: Vorschläge mit privaten Daten
       proposals:
         orders:
           az: A-Z (alphabetisch)
           supported_first: Zuerst unterstützt
           supported_last: Zuletzt unterstützt
           za: Z-A (umgekehrt alphabetisch)
+        proposal:
+          view_proposal: Vorschlag ansehen
   layouts:
     decidim:
-      admin:
-        decidim_awesome:
-          title: Decidim Awesome
       decidim_awesome:
+        admin:
+          maintenance:
+            title: 'Wartungswerkzeuge: %{title}'
+            titles:
+              checks: Systemkompatibilitätsprüfungen
+              private_data: Bereinigung personenbezogener Daten
         awesome_config:
           amendments: Änderungsvorschläge
           autosaved_error: Automatisches Speichern fehlgeschlagen

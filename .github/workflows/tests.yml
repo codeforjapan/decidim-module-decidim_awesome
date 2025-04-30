@@ -79,7 +79,7 @@ jobs:
 
       - run: tar -zcf /tmp/testapp-env.tar.gz ./spec/decidim_dummy_app
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: workspace
           path: /tmp/testapp-env.tar.gz

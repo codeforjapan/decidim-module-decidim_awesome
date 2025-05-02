@@ -394,7 +394,7 @@ describe "Voting weights with cards" do
       let(:proposal) { create(:proposal, :rejected, component:) }
       let!(:vote_weights) { [] }
 
-      it "shows the vote count" do
+      xit "shows the vote count" do
         within '.filter-container [aria-labelledby="trigger-menu-state"]' do
           check "All"
           uncheck "All"

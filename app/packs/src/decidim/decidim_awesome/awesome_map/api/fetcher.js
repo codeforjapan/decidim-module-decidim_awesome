@@ -29,6 +29,10 @@ export default class Fetcher {
     const api = new ApiFetcher(this.query, variables);
     api.fetchAll((result) => {
       if (result) {
+        if (!result.component) {
+          this.onFinished();
+          return;
+        }
         const collection = result.component[this.collection];
         // console.log("collection", collection)
         

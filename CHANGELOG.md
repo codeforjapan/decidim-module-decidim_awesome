@@ -1,13 +1,45 @@
 CHANGELOG
 =========
 
-Current
+v0.12.1
+-------
+
+Compatibility:
+  - Decidim 0.29.x
+
+Feature:
+  - Added formBuilder languages controller to avoid external CDN
+  - Fix cache hash in the global menu override
+  - Fix crash on updating empty boxes for scoped admins
+
+v0.12.0
+-------
+Compatibility:
+  - Decidim 0.29.x
+
+Features:
+  - Upgrade to Decidim v0.29
+
+v0.11.4
+-------
+Compatibility:
+  - Decidim 0.28.x
+
+Features:
+  - Fix allowing to accept terms and conditions when forced verifications enabled
+  - Some other minor fixes
+  - Basque translations
+
+v0.11.3
 -------
 Compatibility:
   - Decidim v0.28.x
 
 Features:
   - Added user time zones in account settings
+  - Added custom styles for the admin panel
+  - Added Verification tweaks
+  - Added Admin manual verifications
 
 v0.11.2
 -------
@@ -75,8 +107,8 @@ Compatibility:
 
 Features:
   - Migrate to [Deface](https://github.com/spree/deface) for overrides
-  - Introduce Weighted Voting with configurable manifests for different types of votings with grades
-  - Fix wrong behaviour showing proposals on map
+  - Introduce Weighted Voting with configurable manifests for different types of voting with grades
+  - Fix wrong behavior showing proposals on map
   - Introduced new sorting options for proposals. Added alphabetical sorting, reverse sorting, sorting by votes first and last.
 
 v0.9.3
@@ -98,7 +130,7 @@ Compatibility:
 
 Features:
   - Fixes for the menu hacker
- 
+
 v0.9.1
 ------
 
@@ -174,7 +206,7 @@ Features:
   - Now awesome components can be disabled using the `disabled_components` configuration var.
   - Feature: Custom redirections editor: Create shorter URL redirections to other places, inside or outside Decidim.
   - Update to webpacker compatiblity and Decidim 0.25
-  - Added tasks `bin/rails decidim_awesome:active_storage_migrations:check_migration_from_carrierwave` and `bin/rails decidim_awesome:active_storage_migrations:migrate_from_carrierwave` (also accessible as a backgroundjob from the awesome admin checks)
+  - Added tasks `bin/rails decidim_awesome:active_storage_migrations:check_migration_from_carrierwave` and `bin/rails decidim_awesome:active_storage_migrations:migrate_from_carrierwave` (also accessible as a background job from the awesome admin checks)
   - REMOVED: SCSS themes are not available anymore (the alternative is to use custom styles). This is mostly because of webpacker.
 
 v0.7.2
@@ -186,7 +218,7 @@ Compatibility:
 
 Features:
   - Added custom fields (with admin interface and scopable) to replace normal body in proposals.
-  - Change Markdown editor behaviour: now it is converted to HTML before storing in the database. This makes the editor compatible with all Rich Text editors.
+  - Change Markdown editor behavior: now it is converted to HTML before storing in the database. This makes the editor compatible with all Rich Text editors.
   - Added icons in the awesome config menu
   - Fixes scoped admins accessing process groups
 
@@ -202,7 +234,7 @@ Features:
   - Add Awesome Map content block for the homepage
   - Added processes groups constraint for different scoped tweaks
   - Added "Never" constraint to deactivated scoped tweaks temporarily
-  - Change Markdown editor behaviour: now it is converted to HTML before storing in the database. This makes the editor compatible with all Rich Text editors. This also takes this feature out the the "experimental" zone as the resulting edited text is fully compatible with standard Decidim.
+  - Change Markdown editor behavior: now it is converted to HTML before storing in the database. This makes the editor compatible with all Rich Text editors. This also takes this feature out the the "experimental" zone as the resulting edited text is fully compatible with standard Decidim.
   - Added scoped admins feature: Any user can be turned into a limited admin and scoped to one or more participatory spaces.
   - Fix allowing access to participatory space admins (only full admins can access the module).
   - Added `participatory_spaces_routes_context` config variable to specify additional routes correspondences to participatory spaces.

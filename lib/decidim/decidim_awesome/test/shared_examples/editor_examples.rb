@@ -2,7 +2,7 @@
 
 shared_examples "has no image support" do
   it "has no image button" do
-    expect(page).not_to have_xpath("//button[@class='editor-toolbar-control'][@data-editor-type='image']")
+    expect(page).to have_no_xpath("//button[@class='editor-toolbar-control'][@data-editor-type='image']")
   end
 end
 
@@ -14,7 +14,7 @@ end
 
 shared_examples "has no video support" do
   it "has no video button" do
-    expect(page).not_to have_xpath("//button[@class='editor-toolbar-control'][@data-editor-type='videoEmbed']")
+    expect(page).to have_no_xpath("//button[@class='editor-toolbar-control'][@data-editor-type='videoEmbed']")
   end
 end
 
@@ -26,7 +26,7 @@ end
 
 shared_examples "has no drag and drop" do
   it "cannot drop a file" do
-    expect(page).not_to have_content("Add images by dragging & dropping or pasting them.")
+    expect(page).to have_no_content("Add images by dragging & dropping or pasting them.")
     find(editor_selector).drop(image)
     expect(page.execute_script("return document.querySelector('#{editor_selector}').value")).not_to eq("[Uploading file...]")
     sleep 1
@@ -46,6 +46,7 @@ shared_examples "has drag and drop" do
     sleep 1
     last_image = Decidim::DecidimAwesome::EditorImage.last
     expect(last_image).to be_present
+    sleep 1 # some time to transform the image objectid to the signed id
     content = page.execute_script("return document.querySelector('#{editor_selector}').value")
     expect(content).to include(last_image.attached_uploader(:file).path)
     within "form.edit_proposal" do
@@ -54,6 +55,6 @@ shared_examples "has drag and drop" do
       fill_in :proposal_title, with: "This is a test proposal"
       click_on "Send"
     end
-    expect(proposal.reload.body["en"]).to include(last_image.attached_uploader(:file).path)
+    expect(proposal.reload.body["en"]).to include(last_image.file.blob.to_gid.to_s)
   end
 end

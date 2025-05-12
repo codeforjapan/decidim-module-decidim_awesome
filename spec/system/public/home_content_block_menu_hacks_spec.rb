@@ -6,8 +6,8 @@ describe "Hacked home content block menu" do
   let(:organization) { create(:organization) }
   let!(:participatory_process) { create(:participatory_process, organization:) }
   let!(:config) { create(:awesome_config, organization:, var: :home_content_block_menu, value: menu) }
-  let(:menu) { [overriden, added] }
-  let(:overriden) do
+  let(:menu) { [overridden, added] }
+  let(:overridden) do
     {
       url: "/processes",
       label: {
@@ -39,7 +39,7 @@ describe "Hacked home content block menu" do
 
   it "renders the hacked menu" do
     within "#home__menu" do
-      expect(page).not_to have_content("Processes")
+      expect(page).to have_no_content("Processes")
       expect(page).to have_content("Mastering projects")
       expect(page).to have_content("Blog")
     end
@@ -56,7 +56,7 @@ describe "Hacked home content block menu" do
 
   describe "visibility" do
     let(:visibility) { "default" }
-    let(:overriden) do
+    let(:overridden) do
       {
         url: "/processes",
         label: {
@@ -78,7 +78,7 @@ describe "Hacked home content block menu" do
 
       it "do not show the menu item" do
         within "#home__menu" do
-          expect(page).not_to have_content("Mastering projects")
+          expect(page).to have_no_content("Mastering projects")
         end
       end
     end
@@ -88,7 +88,7 @@ describe "Hacked home content block menu" do
 
       it "do not show the menu item" do
         within "#home__menu" do
-          expect(page).not_to have_content("Mastering projects")
+          expect(page).to have_no_content("Mastering projects")
         end
       end
     end
@@ -117,7 +117,7 @@ describe "Hacked home content block menu" do
 
         it "do not show the menu item" do
           within "#home__menu" do
-            expect(page).not_to have_content("Mastering projects")
+            expect(page).to have_no_content("Mastering projects")
           end
         end
       end
@@ -137,7 +137,7 @@ describe "Hacked home content block menu" do
 
         it "do not show the menu item" do
           within "#home__menu" do
-            expect(page).not_to have_content("Mastering projects")
+            expect(page).to have_no_content("Mastering projects")
           end
         end
       end
@@ -165,7 +165,7 @@ describe "Hacked home content block menu" do
 
           it "shows the item" do
             within "#home__menu" do
-              expect(page).not_to have_content("Mastering projects")
+              expect(page).to have_no_content("Mastering projects")
             end
           end
         end
@@ -175,7 +175,7 @@ describe "Hacked home content block menu" do
 
           it "shows the item" do
             within "#home__menu" do
-              expect(page).not_to have_content("Mastering projects")
+              expect(page).to have_no_content("Mastering projects")
             end
           end
         end
@@ -187,8 +187,8 @@ describe "Hacked home content block menu" do
         it "renders the normal menu" do
           within "#home__menu" do
             expect(page).to have_content("Processes")
-            expect(page).not_to have_content("Mastering projects")
-            expect(page).not_to have_content("Blog")
+            expect(page).to have_no_content("Mastering projects")
+            expect(page).to have_no_content("Blog")
           end
         end
       end

@@ -1,13 +1,44 @@
 CHANGELOG
 =========
 
+v0.13.0
+-------
+
+Compatibility:
+  - Decidim 0.30.x
+
+Features:
+  - Upgrade to Decidim v0.30
+
+v0.12.2
+-------
+
+Compatibility:
+  - Decidim 0.29.x
+
+Features:
+  - Fix custom styles loading order
+  - Fix for awesome map no loading in a component
+  - Fix "other" options in checkbox/radio custom fields
+  - Added Mobile Menu Override
+
+v0.12.2
+-------
+
+Compatibility:
+  - Decidim 0.29.x
+
+Features:
+  - Added HashCash anti-bot mechanism
+  - Fixed multi-tenant crossover in admin accountability
+
 v0.12.1
 -------
 
 Compatibility:
   - Decidim 0.29.x
 
-Feature:
+Features:
   - Added formBuilder languages controller to avoid external CDN
   - Fix cache hash in the global menu override
   - Fix crash on updating empty boxes for scoped admins

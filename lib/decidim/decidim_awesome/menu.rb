@@ -54,11 +54,12 @@ module Decidim
 
             menu.add_item :menu_hacks,
                           I18n.t("menu.menu_hacks", scope: "decidim.decidim_awesome.admin"),
-                          decidim_admin_decidim_awesome.menu_hacks_path(menus[:menu_hacks_menu] ? :menu : :home_content_block_menu),
+                          decidim_admin_decidim_awesome.menu_hacks_path(menus[:menu_hacks_menu] ? :menu : (menus[:menu_hacks_mobile_menu] ? :mobile_menu : :home_content_block_menu)),
                           position: 7,
                           icon_name: "menu-line",
                           if: menus[:menu_hacks],
                           active: is_active_link?(decidim_admin_decidim_awesome.menu_hacks_path(:menu)) ||
+                                  is_active_link?(decidim_admin_decidim_awesome.menu_hacks_path(:mobile_menu)) ||
                                   is_active_link?(decidim_admin_decidim_awesome.menu_hacks_path(:home_content_block_menu)),
                           submenu: { target_menu: :menu_hacks_submenu }
 
@@ -139,10 +140,17 @@ module Decidim
                           icon_name: "global-line",
                           if: menus[:menu_hacks_menu]
 
-            menu.add_item :content_block_main_menu,
+            menu.add_item :mobile_menu,
+                          I18n.t("mobile_menu.title", scope: "decidim.decidim_awesome.admin.menu_hacks.index"),
+                          decidim_admin_decidim_awesome.menu_hacks_path(:mobile_menu),
+                          position: 7.2,
+                          icon_name: "smartphone",
+                          if: menus[:menu_hacks_mobile_menu]
+
+            menu.add_item :home_content_block_menu,
                           I18n.t("home_content_block_menu.title", scope: "decidim.decidim_awesome.admin.menu_hacks.index"),
                           decidim_admin_decidim_awesome.menu_hacks_path(:home_content_block_menu),
-                          position: 7.2,
+                          position: 7.3,
                           icon_name: "layout-masonry-line",
                           if: menus[:menu_hacks_home_content_block_menu]
           end
@@ -182,8 +190,9 @@ module Decidim
             proposal_custom_fields: config_enabled?(:proposal_custom_fields),
             proposal_private_custom_fields: config_enabled?(:proposal_private_custom_fields),
             admins: config_enabled?(:scoped_admins),
-            menu_hacks: config_enabled?(:menu, :home_content_block_menu),
+            menu_hacks: config_enabled?(:menu, :mobile_menu, :home_content_block_menu),
             menu_hacks_menu: config_enabled?(:menu),
+            menu_hacks_mobile_menu: config_enabled?(:mobile_menu),
             menu_hacks_home_content_block_menu: config_enabled?(:home_content_block_menu),
             custom_redirects: config_enabled?(:custom_redirects),
             livechat: config_enabled?(:intergram_for_admins, :intergram_for_public),

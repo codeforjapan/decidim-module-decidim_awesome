@@ -473,6 +473,8 @@ ja:
               title: グローバルメニューホームブロック
             menu:
               title: メインメニュー
+            mobile_menu:
+              title: モバイルメニュー
             new: 新しい項目
             remove: 追加の削除
             remove_hack: カスタマイズの削除

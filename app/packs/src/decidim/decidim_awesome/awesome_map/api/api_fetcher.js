@@ -15,6 +15,8 @@ export default class ApiFetcher { // eslint-disable-line no-unused-vars
       })
     }).done(function(data) {
       callback(data.data);
+    }).fail(function() {
+      callback(null);
     });
   }
 

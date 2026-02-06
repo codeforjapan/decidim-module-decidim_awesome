@@ -70,6 +70,11 @@ export default class AwesomeMap {
         };
       }
     });
+
+    if (this.loading.length === 0) {
+      this.controls.loading.style.display = "none";
+      this.onFinished();
+    }
   }
 
   autoResize() {

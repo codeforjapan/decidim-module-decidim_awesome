@@ -14,11 +14,20 @@ module Decidim
           def render_proposal_body(proposal)
             if awesome_proposal_custom_fields.present? || awesome_config[:allow_images_in_editors]
               content = present(proposal).body(links: true, strip_tags: false)
-              sanitized = decidim_sanitize_editor_admin(content, {})
+              sanitized = if awesome_official_proposal?(proposal)
+                            decidim_sanitize_editor_admin(content, {})
+                          else
+                            decidim_sanitize_editor(content, scrubber: Decidim::DecidimAwesome::ParticipantInputScrubber.new)
+                          end
               Decidim::ContentProcessor.render_without_format(sanitized).html_safe
             else
               decidim_render_proposal_body(proposal)
             end
+          end
+
+          # Same condition as Decidim::Proposals::ApplicationHelper#safe_content_admin?
+          def awesome_official_proposal?(proposal)
+            (proposal.official? || proposal.official_meeting?) && proposal.participatory_text_level.nil?
           end
 
           # replace normal method to draw the editor

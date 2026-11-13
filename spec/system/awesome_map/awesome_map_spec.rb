@@ -106,6 +106,22 @@ describe "Show awesome map" do
     end
   end
 
+  context "when the proposal has formatted text" do
+    let(:formatted_title) { "Title with <b>tags</b>" }
+    let!(:formatted_proposal) { create(:proposal, title: { en: formatted_title }, component: proposal_component, latitude: 20, longitude: 20) }
+
+    before { visit_component }
+
+    it "shows the title as text in the popup" do
+      sleep(3)
+      find("div[title='#{formatted_title}']").click
+      within ".leaflet-popup-content .card__list-title" do
+        expect(page).to have_content(formatted_title)
+        expect(page).to have_no_css("b")
+      end
+    end
+  end
+
   context "when step settings are all false" do
     let(:show_accepted) { false }
     let(:show_evaluating) { false }

@@ -122,6 +122,22 @@ describe "Show awesome map" do
     end
   end
 
+  context "when the proposal has hashtags written before Decidim 0.31" do
+    let!(:hashtag_proposal) { create(:proposal, title: { en: "Proposal with hashtags" }, body: { en: "<p>Body text gid://decidim-app/Decidim::Hashtag/1/_park</p>" }, component: proposal_component, latitude: 20, longitude: 20) }
+
+    before { visit_component }
+
+    it "does not show them in the popup" do
+      sleep(3)
+      find("div[title='Proposal with hashtags']").click
+      within ".leaflet-popup-content" do
+        expect(page).to have_content("Body text")
+        expect(page).to have_no_content("park")
+        expect(page).to have_no_css("a[href*='/search']")
+      end
+    end
+  end
+
   context "when step settings are all false" do
     let(:show_accepted) { false }
     let(:show_evaluating) { false }

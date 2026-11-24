@@ -63,11 +63,10 @@ export default class Fetcher {
   decorateNode(node) {
     const body = this.findTranslation(node.body.translations)
     const title = this.findTranslation(node.title.translations);
-    node.hashtags = this.collectHashtags(title);
-    node.hashtags = node.hashtags.concat(this.collectHashtags(body));
-    // hashtags in the title look ugly, lets replace the gid:... structure with the tag #name
-    node.title.translation = this.replaceHashtags(title, node.hashtags);
-    node.body.translation = this.appendHtmlHashtags(this.truncate(this.removeHashtags(body)), node.hashtags);
+    // Hashtags were removed in Decidim 0.31, so they are not collected from the texts
+    node.hashtags = [];
+    node.title.translation = title;
+    node.body.translation = this.truncate(this.removeHashtags(body));
     // console.log("decorateNode", node.title.translation, "BODY", body, "translation", node.body.translation, node.hashtags)
     node.link = `${this.controller.component.url}/${node.id}`;
   }

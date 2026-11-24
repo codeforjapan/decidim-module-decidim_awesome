@@ -39,6 +39,11 @@ describe "Visit the admin page" do
     click_link_or_button "Decidim awesome"
   end
 
+  after do
+    # Menu memoizes the menus in the class, so the ones built with the disabled features would leak into the other specs
+    Decidim::DecidimAwesome::Menu.instance_variable_set(:@menus, nil)
+  end
+
   it_behaves_like "javascript config vars"
 
   context "when manages tweaks" do

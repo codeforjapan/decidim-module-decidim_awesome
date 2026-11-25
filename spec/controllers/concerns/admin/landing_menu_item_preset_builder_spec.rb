@@ -49,6 +49,22 @@ module Decidim::DecidimAwesome
             expect(anchors.first[0]).to eq(I18n.t(sibling_block.manifest.public_name_key, default: sibling_block.manifest_name.humanize))
             expect(anchors.first[1]).to eq("#html-block-html")
           end
+
+          context "when a published content block has no manifest" do
+            let!(:orphan_block) { create(:content_block, organization:, manifest_name: :html, scope_name: :homepage) }
+
+            before do
+              # rubocop:disable Rails/SkipsModelValidations
+              orphan_block.update_column(:manifest_name, "global_menu")
+              # rubocop:enable Rails/SkipsModelValidations
+            end
+
+            it "skips it" do
+              anchors = second_preset[1]
+              expect(anchors.count).to eq(1)
+              expect(anchors.first[1]).to eq("#html-block-html")
+            end
+          end
         end
       end
     end

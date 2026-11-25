@@ -47,6 +47,8 @@ module Decidim
           )
 
           sibling_blocks.filter_map do |block|
+            next unless block.manifest
+
             anchor = ParseContentBlock.new(cell(block.cell, block)).id
             next unless anchor
 

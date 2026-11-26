@@ -32,7 +32,7 @@ concurrency:
 jobs:
   build:
     name: Build & Precompile
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     services:
       postgres:
@@ -104,7 +104,7 @@ jobs:
 
   tests-latest:
     name: Tests latest
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: build
 
     strategy:
@@ -159,8 +159,9 @@ jobs:
       - run: |
           sudo apt update
           sudo apt install libu2f-udev
-          wget --no-verbose -O /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i /tmp/chrome.deb
+          # Chrome 158 rejects the "*" origin Capybara uses to clear storage (teamcapybara/capybara#2865)
+          wget --no-verbose -O /tmp/chrome.deb https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_157.0.8103.78-1_amd64.deb
+          sudo apt install -y --allow-downgrades /tmp/chrome.deb
           rm /tmp/chrome.deb
 
       - uses: nanasess/setup-chromedriver@v2
